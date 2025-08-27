@@ -1,33 +1,90 @@
-import React, { useState, useEffect } from 'react';
-import styled, { keyframes } from 'styled-components';
-import { Mail, Phone, MapPin, Send, Globe, Ship, Users, Target, Heart, Package, CheckCircle, Star, Menu, X } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import styled, { keyframes } from "styled-components";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Send,
+  Globe,
+  Ship,
+  Users,
+  Target,
+  Heart,
+  Package,
+  CheckCircle,
+  Star,
+  Menu,
+  X,
+} from "lucide-react";
+import ProductCard from "./ProductCard";
+import FeatureListItems from "./FeatureListItems";
+import SmallModal from "./SmallModal";
 
 const LandingPage = () => {
   const [formData, setFormData] = useState({
-    nombre: '',
-    email: '',
-    mensaje: ''
+    nombre: "",
+    email: "",
+    mensaje: "",
   });
-  const [activeSection, setActiveSection] = useState('inicio');
+  const [activeSection, setActiveSection] = useState("inicio");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [messageLoading, setMessageLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [modalType, setModalType] = useState("");
+  const [modalMessage, setModalMessage] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
-  const handleSubmit = (e) => {
+  const closeModal = () => {
+    setShowModal(false);
+    if (modalType === "success") {
+      // Opcional: limpiar el formulario solo si el envío fue exitoso
+      setFormData({ nombre: "", email: "", mensaje: "" });
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e?.preventDefault?.();
+
     if (!formData.nombre || !formData.email || !formData.mensaje) {
-      alert('Por favor completa todos los campos obligatorios.');
+      alert("Por favor completa todos los campos obligatorios.");
       return;
     }
-    console.log('Formulario enviado:', formData);
-    alert('¡Mensaje enviado correctamente! Nos pondremos en contacto contigo pronto.');
-    setFormData({ nombre: '', email: '', mensaje: '' });
+    setMessageLoading(true);
+    try {
+      const response = await fetch("https://formspree.io/f/xnnzenab", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setModalType("success");
+        setModalMessage(
+          "¡Mensaje enviado correctamente! Pronto nos pondremos en contacto contigo."
+        );
+      } else {
+        setModalType("error");
+        setModalMessage(
+          "Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo más tarde."
+        );
+      }
+    } catch (error) {
+      console.error("Error al enviar el formulario:", error);
+      setModalType("error");
+      setModalMessage(
+        "Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo más tarde."
+      );
+    } finally {
+      setMessageLoading(false);
+      setShowModal(true);
+    }
   };
 
   const scrollToSection = (sectionId) => {
@@ -36,7 +93,7 @@ const LandingPage = () => {
       const offsetTop = element.offsetTop - 80;
       window.scrollTo({
         top: offsetTop,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
       setActiveSection(sectionId);
       setIsMenuOpen(false);
@@ -45,14 +102,25 @@ const LandingPage = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['inicio', 'nosotros', 'clientes', 'objetivo', 'compromiso', 'importaciones', 'contacto'];
+      const sections = [
+        "inicio",
+        "nosotros",
+        "clientes",
+        "objetivo",
+        "compromiso",
+        "importaciones",
+        "contacto",
+      ];
       const scrollPosition = window.scrollY + 100;
 
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
           const { offsetTop, offsetHeight } = element;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+          if (
+            scrollPosition >= offsetTop &&
+            scrollPosition < offsetTop + offsetHeight
+          ) {
             setActiveSection(section);
             break;
           }
@@ -60,8 +128,8 @@ const LandingPage = () => {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
@@ -71,51 +139,53 @@ const LandingPage = () => {
         <NavContainer>
           <NavContent>
             <Logo>
-              <Globe style={{height: '2rem', width: '2rem', color: '#2563eb'}} />
+              <Globe
+                style={{ height: "2rem", width: "2rem", color: "#2563eb" }}
+              />
               <LogoText>ExoComex SRL</LogoText>
             </Logo>
-            
+
             {/* Desktop Menu */}
             <NavLinks>
-              <NavLink 
-                onClick={() => scrollToSection('inicio')} 
-                active={activeSection === 'inicio'}
+              <NavLink
+                onClick={() => scrollToSection("inicio")}
+                active={activeSection === "inicio"}
               >
                 Inicio
               </NavLink>
-              <NavLink 
-                onClick={() => scrollToSection('nosotros')} 
-                active={activeSection === 'nosotros'}
+              <NavLink
+                onClick={() => scrollToSection("nosotros")}
+                active={activeSection === "nosotros"}
               >
                 Nosotros
               </NavLink>
-              <NavLink 
-                onClick={() => scrollToSection('clientes')} 
-                active={activeSection === 'clientes'}
+              <NavLink
+                onClick={() => scrollToSection("clientes")}
+                active={activeSection === "clientes"}
               >
-                Marcas
+                Productos
               </NavLink>
-              <NavLink 
-                onClick={() => scrollToSection('objetivo')} 
-                active={activeSection === 'objetivo'}
+              <NavLink
+                onClick={() => scrollToSection("objetivo")}
+                active={activeSection === "objetivo"}
               >
                 Objetivo
               </NavLink>
-              <NavLink 
-                onClick={() => scrollToSection('compromiso')} 
-                active={activeSection === 'compromiso'}
+              <NavLink
+                onClick={() => scrollToSection("compromiso")}
+                active={activeSection === "compromiso"}
               >
                 Compromiso
               </NavLink>
-              <NavLink 
-                onClick={() => scrollToSection('importaciones')} 
-                active={activeSection === 'importaciones'}
+              <NavLink
+                onClick={() => scrollToSection("importaciones")}
+                active={activeSection === "importaciones"}
               >
                 Importaciones
               </NavLink>
-              <NavLink 
-                onClick={() => scrollToSection('contacto')} 
-                active={activeSection === 'contacto'}
+              <NavLink
+                onClick={() => scrollToSection("contacto")}
+                active={activeSection === "contacto"}
               >
                 Contacto
               </NavLink>
@@ -131,45 +201,45 @@ const LandingPage = () => {
           {isMenuOpen && (
             <MobileMenu>
               <MobileMenuContent>
-                <MobileMenuLink 
-                  onClick={() => scrollToSection('inicio')} 
-                  active={activeSection === 'inicio'}
+                <MobileMenuLink
+                  onClick={() => scrollToSection("inicio")}
+                  active={activeSection === "inicio"}
                 >
                   Inicio
                 </MobileMenuLink>
-                <MobileMenuLink 
-                  onClick={() => scrollToSection('nosotros')} 
-                  active={activeSection === 'nosotros'}
+                <MobileMenuLink
+                  onClick={() => scrollToSection("nosotros")}
+                  active={activeSection === "nosotros"}
                 >
                   Sobre Nosotros
                 </MobileMenuLink>
-                <MobileMenuLink 
-                  onClick={() => scrollToSection('clientes')} 
-                  active={activeSection === 'clientes'}
+                <MobileMenuLink
+                  onClick={() => scrollToSection("clientes")}
+                  active={activeSection === "clientes"}
                 >
                   Clientes
                 </MobileMenuLink>
-                <MobileMenuLink 
-                  onClick={() => scrollToSection('objetivo')} 
-                  active={activeSection === 'objetivo'}
+                <MobileMenuLink
+                  onClick={() => scrollToSection("objetivo")}
+                  active={activeSection === "objetivo"}
                 >
                   Objetivo
                 </MobileMenuLink>
-                <MobileMenuLink 
-                  onClick={() => scrollToSection('compromiso')} 
-                  active={activeSection === 'compromiso'}
+                <MobileMenuLink
+                  onClick={() => scrollToSection("compromiso")}
+                  active={activeSection === "compromiso"}
                 >
                   Compromiso
                 </MobileMenuLink>
-                <MobileMenuLink 
-                  onClick={() => scrollToSection('importaciones')} 
-                  active={activeSection === 'importaciones'}
+                <MobileMenuLink
+                  onClick={() => scrollToSection("importaciones")}
+                  active={activeSection === "importaciones"}
                 >
                   Importaciones
                 </MobileMenuLink>
-                <MobileMenuLink 
-                  onClick={() => scrollToSection('contacto')} 
-                  active={activeSection === 'contacto'}
+                <MobileMenuLink
+                  onClick={() => scrollToSection("contacto")}
+                  active={activeSection === "contacto"}
                 >
                   Contacto
                 </MobileMenuLink>
@@ -184,22 +254,20 @@ const LandingPage = () => {
         <HeroBackground />
         <HeroOverlay />
         <HeroPattern />
-        
+
         <HeroContent>
           <HeroTitle>
             Empresa Impo/Exportadora
-            <HeroSubtitle>
-            Te conectamos con el mundo
-            </HeroSubtitle>
+            <HeroSubtitle>Te conectamos con el mundo</HeroSubtitle>
           </HeroTitle>
           <HeroDescription>
-          Ofrecemos seguridad y confianza con mas de 10 años de experiencia.
+            Ofrecemos seguridad y confianza con mas de 10 años de experiencia.
           </HeroDescription>
           <HeroButtons>
-            <PrimaryButton onClick={() => scrollToSection('contacto')}>
+            <PrimaryButton onClick={() => scrollToSection("contacto")}>
               Contactanos
             </PrimaryButton>
-{/*             <SecondaryButton onClick={() => scrollToSection('contacto')}>
+            {/*             <SecondaryButton onClick={() => scrollToSection('contacto')}>
               Contactanos
             </SecondaryButton> */}
           </HeroButtons>
@@ -209,11 +277,15 @@ const LandingPage = () => {
       {/* Sobre Nosotros */}
       <WhiteSection id="nosotros">
         <SectionContainer>
-          <SectionTitle style={{color: '#111827'}}>Sobre Nosotros</SectionTitle>
+          <SectionTitle style={{ color: "#111827" }}>
+            Sobre Nosotros
+          </SectionTitle>
           <SectionSubtitle>
-          Somos una organización joven y dinámica, con años de experiencia en el rubro. Combinamos la trayectoria de profesionales experimentados con la agilidad de una nueva perspectiva.
+            Somos una organización joven y dinámica, con años de experiencia en
+            el rubro. Combinamos la trayectoria de profesionales experimentados
+            con la agilidad de una nueva perspectiva.
           </SectionSubtitle>
-          
+
           <ObjectiveGrid>
             <div>
               <ImagePlaceholder>
@@ -221,126 +293,83 @@ const LandingPage = () => {
               </ImagePlaceholder>
             </div>
             <FeatureList>
-              <FeatureItem>
-                <CheckCircle size={24} color="#10b981" style={{marginTop: '0.25rem', flexShrink: 0}} />
-                <FeatureContent>
-                  <h3>Experiencia Global</h3>
-                  <p>Planificamos la mejor estrategia para que importes tus mercaderías desde cualquier parte del mundo. Nuestra experiencia nos permite garantizar un proceso eficiente y seguro en cada operación.</p>
-                </FeatureContent>
-              </FeatureItem>
-              <FeatureItem>
-                <CheckCircle size={24} color="#10b981" style={{marginTop: '0.25rem', flexShrink: 0}} />
-                <FeatureContent>
-                  <h3>Soluciones Integrales</h3>
-                  <p>Diseñamos soluciones completas que simplifican tus operaciones, desde la logística hasta la optimización de costos. Con nuestras estrategias, te enfocas en el crecimiento de tu negocio.</p>
-                </FeatureContent>
-              </FeatureItem>
-              <FeatureItem>
-                <CheckCircle size={24} color="#10b981" style={{marginTop: '0.25rem', flexShrink: 0}} />
-                <FeatureContent>
-                  <h3>Compromiso Total</h3>
-                  <p>Nuestro compromiso es asegurar un proceso fluido y transparente de principio a fin. Trabajamos incansablemente para superar tus expectativas y construir una alianza de confianza para tu éxito.</p>
-                </FeatureContent>
-              </FeatureItem>
+              <FeatureListItems />
             </FeatureList>
           </ObjectiveGrid>
         </SectionContainer>
       </WhiteSection>
 
-      {/* Nuestros Clientes */}
-      <GraySection id="clientes"> 
+      {/* Nuestros Productos */}
+      <GraySection id="clientes">
         <SectionContainer>
-          <SectionTitle style={{color: '#111827'}}>Nuestras marcas principales</SectionTitle>
+          <SectionTitle style={{ color: "#111827" }}>
+            Nuestros principales productos
+          </SectionTitle>
           <SectionSubtitle>
-          Presentamos a continuación una selección de las principales marcas con las que hemos colaborado de manera exitosa, construyendo relaciones sólidas y duraderas a través de un servicio de excelencia y resultados comprobados.
+            Presentamos a continuación una selección de las los principales
+            productos con los que hemos trabajado de manera exitosa,
+            construyendo relaciones sólidas y duraderas a través de un servicio
+            de excelencia y resultados comprobados.
           </SectionSubtitle>
-          
-          <Grid cols="3">
-            <Card>
-              <CardContent>
-                <Users size={48} color="#2563eb" style={{marginBottom: '1.5rem'}} />
-                <CardTitle style={{color: '#111827'}}>Empresas Multinacionales</CardTitle>
-                <CardDescription>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </CardDescription>
-{/*                 <StarRating>
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={20} color="#fbbf24" fill="#fbbf24" />
-                  ))}
-                </StarRating> */}
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardContent>
-                <Package size={48} color="#059669" style={{marginBottom: '1.5rem'}} />
-                <CardTitle style={{color: '#111827'}}>PyMEs</CardTitle>
-                <CardDescription>
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </CardDescription>
-{/*                 <StarRating>
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={20} color="#fbbf24" fill="#fbbf24" />
-                  ))}
-                </StarRating> */}
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardContent>
-                <Globe size={48} color="#7c3aed" style={{marginBottom: '1.5rem'}} />
-                <CardTitle style={{color: '#111827'}}>Importadores</CardTitle>
-                <CardDescription>
-                  Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                </CardDescription>
-{/*                 <StarRating>
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={20} color="#fbbf24" fill="#fbbf24" />
-                  ))}
-                </StarRating> */}
-              </CardContent>
-            </Card>
-          </Grid>
+          <ProductCard />
         </SectionContainer>
       </GraySection>
 
       {/* Nuestro Objetivo */}
       <WhiteSection id="objetivo">
         <SectionContainer>
-          <SectionTitle style={{color: '#111827'}}>Nuestro Objetivo</SectionTitle>
+          <SectionTitle style={{ color: "#111827" }}>
+            Nuestro Objetivo
+          </SectionTitle>
           <SectionSubtitle>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </SectionSubtitle>
-          
+
           <ObjectiveGrid>
             <FeatureList>
               <ObjectiveFeature>
                 <Target size={48} color="#2563eb" />
                 <div>
                   <h3>Misión</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua.
+                  </p>
                 </div>
               </ObjectiveFeature>
-              
+
               <ObjectiveFeature>
                 <Globe size={48} color="#059669" />
                 <div>
                   <h3>Visión</h3>
-                  <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                  <p>
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                    laboris nisi ut aliquip ex ea commodo consequat.
+                  </p>
                 </div>
               </ObjectiveFeature>
-              
+
               <ObjectiveFeature>
                 <Heart size={48} color="#dc2626" />
                 <div>
                   <h3>Valores</h3>
-                  <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                  <p>
+                    Duis aute irure dolor in reprehenderit in voluptate velit
+                    esse cillum dolore eu fugiat nulla pariatur.
+                  </p>
                 </div>
               </ObjectiveFeature>
             </FeatureList>
-            
+
             <div>
-              <ImagePlaceholder style={{background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)'}}>
+              <ImagePlaceholder
+                style={{
+                  background:
+                    "linear-gradient(135deg, #a855f7 0%, #ec4899 100%)",
+                }}
+              >
                 <Target size={128} color="white" />
               </ImagePlaceholder>
             </div>
@@ -351,42 +380,53 @@ const LandingPage = () => {
       {/* Nuestro Compromiso */}
       <GraySection id="compromiso">
         <SectionContainer>
-          <SectionTitle style={{color: '#111827'}}>Nuestro Compromiso</SectionTitle>
+          <SectionTitle style={{ color: "#111827" }}>
+            Nuestro Compromiso
+          </SectionTitle>
           <SectionSubtitle>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </SectionSubtitle>
-          
+
           <Grid cols="4">
             <CommitmentItem>
               <CommitmentIcon bgColor="#2563eb">
                 <CheckCircle size={40} color="white" />
               </CommitmentIcon>
               <CommitmentTitle>Calidad</CommitmentTitle>
-              <CommitmentDescription>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</CommitmentDescription>
+              <CommitmentDescription>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              </CommitmentDescription>
             </CommitmentItem>
-            
+
             <CommitmentItem>
               <CommitmentIcon bgColor="#059669">
                 <Users size={40} color="white" />
               </CommitmentIcon>
               <CommitmentTitle>Servicio</CommitmentTitle>
-              <CommitmentDescription>Ut enim ad minim veniam, quis nostrud exercitation.</CommitmentDescription>
+              <CommitmentDescription>
+                Ut enim ad minim veniam, quis nostrud exercitation.
+              </CommitmentDescription>
             </CommitmentItem>
-            
+
             <CommitmentItem>
               <CommitmentIcon bgColor="#7c3aed">
                 <Globe size={40} color="white" />
               </CommitmentIcon>
               <CommitmentTitle>Innovación</CommitmentTitle>
-              <CommitmentDescription>Duis aute irure dolor in reprehenderit in voluptate.</CommitmentDescription>
+              <CommitmentDescription>
+                Duis aute irure dolor in reprehenderit in voluptate.
+              </CommitmentDescription>
             </CommitmentItem>
-            
+
             <CommitmentItem>
               <CommitmentIcon bgColor="#dc2626">
                 <Heart size={40} color="white" />
               </CommitmentIcon>
               <CommitmentTitle>Confianza</CommitmentTitle>
-              <CommitmentDescription>Excepteur sint occaecat cupidatat non proident.</CommitmentDescription>
+              <CommitmentDescription>
+                Excepteur sint occaecat cupidatat non proident.
+              </CommitmentDescription>
             </CommitmentItem>
           </Grid>
         </SectionContainer>
@@ -395,38 +435,62 @@ const LandingPage = () => {
       {/* Nuestras Importaciones */}
       <WhiteSection id="importaciones">
         <SectionContainer>
-          <SectionTitle style={{color: '#111827'}}>Nuestras Importaciones</SectionTitle>
+          <SectionTitle style={{ color: "#111827" }}>
+            Nuestras Importaciones
+          </SectionTitle>
           <SectionSubtitle>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </SectionSubtitle>
-          
+
           <Grid cols="3">
             <Card>
               <CardContent>
-                <Package size={48} color="#ea580c" style={{marginBottom: '1.5rem'}} />
-                <CardTitle style={{color: '#111827'}}>Productos Electrónicos</CardTitle>
+                <Package
+                  size={48}
+                  color="#ea580c"
+                  style={{ marginBottom: "1.5rem" }}
+                />
+                <CardTitle style={{ color: "#111827" }}>
+                  Productos Electrónicos
+                </CardTitle>
                 <CardDescription>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 </CardDescription>
               </CardContent>
             </Card>
-            
+
             <Card>
               <CardContent>
-                <Ship size={48} color="#2563eb" style={{marginBottom: '1.5rem'}} />
-                <CardTitle style={{color: '#111827'}}>Maquinaria Industrial</CardTitle>
+                <Ship
+                  size={48}
+                  color="#2563eb"
+                  style={{ marginBottom: "1.5rem" }}
+                />
+                <CardTitle style={{ color: "#111827" }}>
+                  Maquinaria Industrial
+                </CardTitle>
                 <CardDescription>
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat.
                 </CardDescription>
               </CardContent>
             </Card>
-            
+
             <Card>
               <CardContent>
-                <Globe size={48} color="#059669" style={{marginBottom: '1.5rem'}} />
-                <CardTitle style={{color: '#111827'}}>Materias Primas</CardTitle>
+                <Globe
+                  size={48}
+                  color="#059669"
+                  style={{ marginBottom: "1.5rem" }}
+                />
+                <CardTitle style={{ color: "#111827" }}>
+                  Materias Primas
+                </CardTitle>
                 <CardDescription>
-                  Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                  Duis aute irure dolor in reprehenderit in voluptate velit esse
+                  cillum dolore eu fugiat nulla pariatur.
                 </CardDescription>
               </CardContent>
             </Card>
@@ -437,15 +501,21 @@ const LandingPage = () => {
       {/* Contacto */}
       <GradientSection id="contacto">
         <SectionContainer>
-          <SectionTitle style={{color: 'white'}}>Contacto</SectionTitle>
-          <SectionSubtitle style={{color: '#bfdbfe'}}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          <SectionTitle style={{ color: "white" }}>Contacto</SectionTitle>
+          <SectionSubtitle style={{ color: "#bfdbfe" }}>
+            <p>
+              Para cualquier consulta, pedido de información o solicitud de
+              cotización, le pedimos que por favor complete el siguiente
+              formulario.
+            </p>
+            <p>¡Le responderemos tan pronto como nos sea posible!</p>
           </SectionSubtitle>
-          
-          <FormContainer>
+
+          <FormContainer onSubmit={handleSubmit}>
             <FormGroup>
               <Label htmlFor="nombre">
-                Nombre <span style={{color: '#df382c', fontWeight: 'bold'}}>*</span>
+                Nombre{" "}
+                <span style={{ color: "#df382c", fontWeight: "bold" }}>*</span>
               </Label>
               <Input
                 type="text"
@@ -457,10 +527,11 @@ const LandingPage = () => {
                 placeholder="Ingresá tu nombre"
               />
             </FormGroup>
-            
+
             <FormGroup>
               <Label htmlFor="email">
-                Email <span style={{color: '#df382c', fontWeight: 'bold'}}>*</span>
+                Email{" "}
+                <span style={{ color: "#df382c", fontWeight: "bold" }}>*</span>
               </Label>
               <Input
                 type="email"
@@ -472,10 +543,11 @@ const LandingPage = () => {
                 placeholder="tu@email.com"
               />
             </FormGroup>
-            
+
             <FormGroup>
               <Label htmlFor="mensaje">
-                Mensaje <span style={{color: '#df382c', fontWeight: 'bold'}}>*</span>
+                Mensaje{" "}
+                <span style={{ color: "#df382c", fontWeight: "bold" }}>*</span>
               </Label>
               <Textarea
                 id="mensaje"
@@ -486,11 +558,28 @@ const LandingPage = () => {
                 placeholder="Escribí tu mensaje aquí..."
               />
             </FormGroup>
-            
-            <SubmitButton type="button" onClick={handleSubmit}>
-              <Send size={20} />
-              <span>Enviar Mensaje</span>
+
+            <SubmitButton type="submit" disabled={messageLoading}>
+              {messageLoading ? (
+                <>
+                  <Spinner animation="border" size="sm" />
+                  <span>Enviando...</span>
+                </>
+              ) : (
+                <>
+                  <Send size={20} />
+                  <span>Enviar Mensaje</span>
+                </>
+              )}
             </SubmitButton>
+
+            <SmallModal
+              show={showModal}
+              onClose={closeModal}
+              message={modalMessage}
+              type={modalType}
+            />
+
           </FormContainer>
         </SectionContainer>
       </GradientSection>
@@ -501,7 +590,7 @@ const LandingPage = () => {
           <FooterText>
             © 2020 ExpoComex SRL. Todos los derechos reservados.
           </FooterText>
-          <p style={{color: '#9ca3af'}}>
+          <p style={{ color: "#9ca3af" }}>
             Contacto: <FooterEmail>contacto@expocomexsrl.com</FooterEmail>
           </p>
         </FooterContent>
@@ -531,6 +620,11 @@ const pulse = keyframes`
   }
 `;
 
+const spin = keyframes`
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+`;
+
 // Styled Components
 const Container = styled.div`
   min-height: 100vh;
@@ -552,11 +646,11 @@ const NavContainer = styled.div`
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 1rem;
-  
+
   @media (min-width: 640px) {
     padding: 0 1.5rem;
   }
-  
+
   @media (min-width: 1024px) {
     padding: 0 2rem;
   }
@@ -584,7 +678,7 @@ const LogoText = styled.span`
 const NavLinks = styled.div`
   display: none;
   gap: 2rem;
-  
+
   @media (min-width: 1024px) {
     display: flex;
   }
@@ -598,13 +692,15 @@ const NavLink = styled.span`
   font-size: 0.875rem;
   font-weight: 500;
   transition: all 0.3s ease;
-  
+
   &:hover {
     color: #2563eb;
     transform: scale(1.05);
   }
-  
-  ${props => props.active && `
+
+  ${(props) =>
+    props.active &&
+    `
     color: #2563eb;
     font-weight: 600;
     background-color: #eff6ff;
@@ -619,11 +715,11 @@ const MobileMenuButton = styled.button`
   background: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  
+
   &:hover {
     background-color: #f3f4f6;
   }
-  
+
   @media (min-width: 1024px) {
     display: none;
   }
@@ -637,7 +733,7 @@ const MobileMenu = styled.div`
   background: white;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
   border-top: 1px solid #e5e7eb;
-  
+
   @media (min-width: 1024px) {
     display: none;
   }
@@ -656,13 +752,15 @@ const MobileMenuLink = styled.span`
   color: #374151;
   cursor: pointer;
   transition: all 0.3s ease;
-  
+
   &:hover {
     color: #2563eb;
     background-color: #f9fafb;
   }
-  
-  ${props => props.active && `
+
+  ${(props) =>
+    props.active &&
+    `
     color: #2563eb;
     font-weight: 600;
   `}
@@ -704,15 +802,15 @@ const HeroContent = styled.div`
   margin: 0 auto;
   padding: 0 1rem;
   animation: ${fadeInUp} 1s ease-out;
-  
+
   @media (min-width: 640px) {
     padding: 0 1.5rem;
   }
 
   @media (max-width: 639px) {
-  padding: 5rem 1.5rem;
-}
-  
+    padding: 5rem 1.5rem;
+  }
+
   @media (min-width: 1024px) {
     padding: 0 2rem;
   }
@@ -725,7 +823,7 @@ const HeroTitle = styled.h1`
   margin-bottom: 1.5rem;
   line-height: 1.1;
   animation: ${pulse} 3s ease-in-out infinite;
-  
+
   @media (min-width: 768px) {
     font-size: 2.5rem;
   }
@@ -746,7 +844,7 @@ const HeroDescription = styled.p`
   color: #bfdbfe;
   margin-bottom: 2rem;
   line-height: 1.6;
-  
+
   @media (min-width: 768px) {
     font-size: 1.5rem;
   }
@@ -758,7 +856,7 @@ const HeroButtons = styled.div`
   gap: 1rem;
   justify-content: center;
   padding-top: 1.8rem;
-  
+
   @media (min-width: 640px) {
     flex-direction: row;
   }
@@ -768,7 +866,7 @@ const PrimaryButton = styled.button`
   background: linear-gradient(90deg, #2563eb 0%, #0891b2 100%);
   color: white;
   font-size: 1rem;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   padding: 1rem 3rem;
   border-radius: 9999px;
   font-weight: 600;
@@ -776,10 +874,10 @@ const PrimaryButton = styled.button`
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  
+
   &:hover {
     background: linear-gradient(90deg, #1d4ed8 0%, #0e7490 100%);
-    transform: scale(1.10);
+    transform: scale(1.1);
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
   }
 `;
@@ -802,11 +900,11 @@ const PrimaryButton = styled.button`
 
 const Section = styled.section`
   padding: 5rem 1rem;
-  
+
   @media (min-width: 640px) {
     padding: 5rem 1.5rem;
   }
-  
+
   @media (min-width: 1024px) {
     padding: 5rem 2rem;
   }
@@ -834,7 +932,7 @@ const SectionTitle = styled.h2`
   font-weight: bold;
   text-align: center;
   margin-bottom: 1rem;
-  
+
   @media (min-width: 768px) {
     font-size: 3rem;
   }
@@ -853,15 +951,19 @@ const SectionSubtitle = styled.p`
 const Grid = styled.div`
   display: grid;
   gap: 2rem;
-  
+
   @media (min-width: 768px) {
-    grid-template-columns: ${props => 
-      props.cols === '2' ? 'repeat(2, 1fr)' : 
-      props.cols === '3' ? 'repeat(3, 1fr)' : 
-      props.cols === '4' ? 'repeat(4, 1fr)' : '1fr'};
+    grid-template-columns: ${(props) =>
+      props.cols === "2"
+        ? "repeat(2, 1fr)"
+        : props.cols === "3"
+        ? "repeat(3, 1fr)"
+        : props.cols === "4"
+        ? "repeat(4, 1fr)"
+        : "1fr"};
   }
-  
-  ${props => props.alignItems && `align-items: ${props.alignItems};`}
+
+  ${(props) => props.alignItems && `align-items: ${props.alignItems};`}
 `;
 
 const Card = styled.div`
@@ -869,7 +971,7 @@ const Card = styled.div`
   border-radius: 1rem;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   transition: all 0.3s ease;
-  
+
   &:hover {
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
     transform: translateY(-8px);
@@ -906,32 +1008,12 @@ const FeatureList = styled.div`
   gap: 1.5rem;
 `;
 
-const FeatureItem = styled.div`
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-`;
-
-const FeatureContent = styled.div`
-  h3 {
-    font-size: 1.25rem;
-    font-weight: bold;
-    color: #111827;
-    margin-bottom: 0.5rem;
-  }
-  
-  p {
-    color: #6b7280;
-    line-height: 1.6;
-  }
-`;
-
 const CommitmentItem = styled.div`
   text-align: center;
 `;
 
 const CommitmentIcon = styled.div`
-  background: ${props => props.bgColor || '#2563eb'};
+  background: ${(props) => props.bgColor || "#2563eb"};
   border-radius: 50%;
   height: 5rem;
   width: 5rem;
@@ -953,14 +1035,14 @@ const CommitmentDescription = styled.p`
   line-height: 1.6;
 `;
 
-const FormContainer = styled.div`
+const FormContainer = styled.form`
   background: white;
   border-radius: 1rem;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   padding: 2rem;
   max-width: 520px;
   margin: 0 auto;
-  box-sizing: border-box; 
+  box-sizing: border-box;
 `;
 
 const FormGroup = styled.div`
@@ -982,14 +1064,14 @@ const Input = styled.input`
   transition: all 0.3s ease;
   font-size: 1rem;
   font-family: inherit;
-  box-sizing: border-box; 
-  
+  box-sizing: border-box;
+
   &:focus {
     outline: none;
     border-color: transparent;
     box-shadow: 0 0 0 2px #2563eb;
   }
-  
+
   &::placeholder {
     color: #9ca3af;
   }
@@ -1005,14 +1087,14 @@ const Textarea = styled.textarea`
   height: 8rem;
   resize: none;
   font-family: inherit;
-  box-sizing: border-box; 
-  
+  box-sizing: border-box;
+
   &:focus {
     outline: none;
     border-color: transparent;
     box-shadow: 0 0 0 2px #2563eb;
   }
-  
+
   &::placeholder {
     color: #9ca3af;
   }
@@ -1034,10 +1116,19 @@ const SubmitButton = styled.button`
   gap: 0.5rem;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
   font-size: 1rem;
-  
+
   &:hover {
     background: linear-gradient(90deg, #1d4ed8 0%, #0e7490 100%);
     transform: scale(1.05);
+  }
+
+  &:disabled {
+    background: #a8b9f0;
+    color: #ffffff; 
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    opacity: 0.7; 
   }
 `;
 
@@ -1052,11 +1143,11 @@ const FooterContent = styled.div`
   margin: 0 auto;
   padding: 0 1rem;
   text-align: center;
-  
+
   @media (min-width: 640px) {
     padding: 0 1.5rem;
   }
-  
+
   @media (min-width: 1024px) {
     padding: 0 2rem;
   }
@@ -1071,7 +1162,7 @@ const FooterEmail = styled.span`
   color: #60a5fa;
   cursor: pointer;
   transition: color 0.3s ease;
-  
+
   &:hover {
     color: #93c5fd;
   }
@@ -1087,7 +1178,7 @@ const ObjectiveGrid = styled.div`
   display: grid;
   gap: 3rem;
   align-items: center;
-  
+
   @media (min-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1097,18 +1188,27 @@ const ObjectiveFeature = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
-  
+
   h3 {
     font-size: 1.5rem;
     font-weight: bold;
     color: #111827;
     margin-bottom: 0.5rem;
   }
-  
+
   p {
     color: #6b7280;
     line-height: 1.6;
   }
+`;
+
+const Spinner = styled.div`
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #02488a;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  animation: ${spin} 1s linear infinite;
 `;
 
 export default LandingPage;
