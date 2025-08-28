@@ -44,7 +44,6 @@ const LandingPage = () => {
   const closeModal = () => {
     setShowModal(false);
     if (modalType === "success") {
-      // Opcional: limpiar el formulario solo si el envío fue exitoso
       setFormData({ nombre: "", email: "", mensaje: "" });
     }
   };
