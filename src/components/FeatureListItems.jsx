@@ -40,6 +40,7 @@ const FeatureContent = styled.div`
   p {
     color: #6b7280;
     line-height: 1.6;
+    text-align: justify;
   }
 `;
 

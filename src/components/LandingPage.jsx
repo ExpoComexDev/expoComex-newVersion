@@ -16,9 +16,14 @@ import {
   Menu,
   X,
 } from "lucide-react";
+import Navbar from "./Navbar";
 import ProductCard from "./ProductCard";
 import FeatureListItems from "./FeatureListItems";
 import SmallModal from "./SmallModal";
+import ObjectivesListItems from "./ObjectivesListItems";
+import objectivesImg from "../img/objectivesImg.jpg";
+import aboutUsImg from "../img/aboutUsImg4.jpg";
+import CommitmentListItems from "./CommitmentListItems";
 
 const LandingPage = () => {
   const [formData, setFormData] = useState({
@@ -131,122 +136,17 @@ const LandingPage = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const navbarProps = {
+    activeSection: activeSection,
+    scrollToSection: scrollToSection,
+    isMenuOpen: isMenuOpen,
+    setIsMenuOpen: setIsMenuOpen,
+  };
+
   return (
     <Container>
       {/* Navigation */}
-      <Nav>
-        <NavContainer>
-          <NavContent>
-            <Logo>
-              <Globe
-                style={{ height: "2rem", width: "2rem", color: "#2563eb" }}
-              />
-              <LogoText>ExoComex SRL</LogoText>
-            </Logo>
-
-            {/* Desktop Menu */}
-            <NavLinks>
-              <NavLink
-                onClick={() => scrollToSection("inicio")}
-                active={activeSection === "inicio"}
-              >
-                Inicio
-              </NavLink>
-              <NavLink
-                onClick={() => scrollToSection("nosotros")}
-                active={activeSection === "nosotros"}
-              >
-                Nosotros
-              </NavLink>
-              <NavLink
-                onClick={() => scrollToSection("clientes")}
-                active={activeSection === "clientes"}
-              >
-                Productos
-              </NavLink>
-              <NavLink
-                onClick={() => scrollToSection("objetivo")}
-                active={activeSection === "objetivo"}
-              >
-                Objetivo
-              </NavLink>
-              <NavLink
-                onClick={() => scrollToSection("compromiso")}
-                active={activeSection === "compromiso"}
-              >
-                Compromiso
-              </NavLink>
-              <NavLink
-                onClick={() => scrollToSection("importaciones")}
-                active={activeSection === "importaciones"}
-              >
-                Importaciones
-              </NavLink>
-              <NavLink
-                onClick={() => scrollToSection("contacto")}
-                active={activeSection === "contacto"}
-              >
-                Contacto
-              </NavLink>
-            </NavLinks>
-
-            {/* Mobile Menu Button */}
-            <MobileMenuButton onClick={() => setIsMenuOpen(!isMenuOpen)}>
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </MobileMenuButton>
-          </NavContent>
-
-          {/* Mobile Menu */}
-          {isMenuOpen && (
-            <MobileMenu>
-              <MobileMenuContent>
-                <MobileMenuLink
-                  onClick={() => scrollToSection("inicio")}
-                  active={activeSection === "inicio"}
-                >
-                  Inicio
-                </MobileMenuLink>
-                <MobileMenuLink
-                  onClick={() => scrollToSection("nosotros")}
-                  active={activeSection === "nosotros"}
-                >
-                  Sobre Nosotros
-                </MobileMenuLink>
-                <MobileMenuLink
-                  onClick={() => scrollToSection("clientes")}
-                  active={activeSection === "clientes"}
-                >
-                  Clientes
-                </MobileMenuLink>
-                <MobileMenuLink
-                  onClick={() => scrollToSection("objetivo")}
-                  active={activeSection === "objetivo"}
-                >
-                  Objetivo
-                </MobileMenuLink>
-                <MobileMenuLink
-                  onClick={() => scrollToSection("compromiso")}
-                  active={activeSection === "compromiso"}
-                >
-                  Compromiso
-                </MobileMenuLink>
-                <MobileMenuLink
-                  onClick={() => scrollToSection("importaciones")}
-                  active={activeSection === "importaciones"}
-                >
-                  Importaciones
-                </MobileMenuLink>
-                <MobileMenuLink
-                  onClick={() => scrollToSection("contacto")}
-                  active={activeSection === "contacto"}
-                >
-                  Contacto
-                </MobileMenuLink>
-              </MobileMenuContent>
-            </MobileMenu>
-          )}
-        </NavContainer>
-      </Nav>
+      <Navbar {...navbarProps} />
 
       {/* Hero Section */}
       <HeroSection id="inicio">
@@ -288,7 +188,8 @@ const LandingPage = () => {
           <ObjectiveGrid>
             <div>
               <ImagePlaceholder>
-                <Ship size={128} color="white" />
+                {/* <Ship size={128} color="white" /> */}
+                <StyledImage src={aboutUsImg} alt="About us" />
               </ImagePlaceholder>
             </div>
             <FeatureList>
@@ -321,55 +222,19 @@ const LandingPage = () => {
             Nuestro Objetivo
           </SectionTitle>
           <SectionSubtitle>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Te ayudamos a importar lo que necesitas. Diseñamos una propuesta
+            integral para tu comodidad, encargándonos de todo el proceso de
+            punta a punta.
           </SectionSubtitle>
 
           <ObjectiveGrid>
             <FeatureList>
-              <ObjectiveFeature>
-                <Target size={48} color="#2563eb" />
-                <div>
-                  <h3>Misión</h3>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
-                  </p>
-                </div>
-              </ObjectiveFeature>
-
-              <ObjectiveFeature>
-                <Globe size={48} color="#059669" />
-                <div>
-                  <h3>Visión</h3>
-                  <p>
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                    laboris nisi ut aliquip ex ea commodo consequat.
-                  </p>
-                </div>
-              </ObjectiveFeature>
-
-              <ObjectiveFeature>
-                <Heart size={48} color="#dc2626" />
-                <div>
-                  <h3>Valores</h3>
-                  <p>
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore eu fugiat nulla pariatur.
-                  </p>
-                </div>
-              </ObjectiveFeature>
+              <ObjectivesListItems />
             </FeatureList>
 
             <div>
-              <ImagePlaceholder
-                style={{
-                  background:
-                    "linear-gradient(135deg, #a855f7 0%, #ec4899 100%)",
-                }}
-              >
-                <Target size={128} color="white" />
+              <ImagePlaceholder>
+                <StyledImage src={objectivesImg} alt="Objetivo" />
               </ImagePlaceholder>
             </div>
           </ObjectiveGrid>
@@ -383,51 +248,14 @@ const LandingPage = () => {
             Nuestro Compromiso
           </SectionTitle>
           <SectionSubtitle>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Nos dedicamos a simplificar la logística global para ti. Gracias a
+            una amplia red de transporte aéreo, marítimo y terrestre, diseñamos
+            la mejor estrategia de envío, optimizada para tus necesidades y que
+            garantiza eficiencia en cada paso.
           </SectionSubtitle>
 
-          <Grid cols="4">
-            <CommitmentItem>
-              <CommitmentIcon bgColor="#2563eb">
-                <CheckCircle size={40} color="white" />
-              </CommitmentIcon>
-              <CommitmentTitle>Calidad</CommitmentTitle>
-              <CommitmentDescription>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              </CommitmentDescription>
-            </CommitmentItem>
-
-            <CommitmentItem>
-              <CommitmentIcon bgColor="#059669">
-                <Users size={40} color="white" />
-              </CommitmentIcon>
-              <CommitmentTitle>Servicio</CommitmentTitle>
-              <CommitmentDescription>
-                Ut enim ad minim veniam, quis nostrud exercitation.
-              </CommitmentDescription>
-            </CommitmentItem>
-
-            <CommitmentItem>
-              <CommitmentIcon bgColor="#7c3aed">
-                <Globe size={40} color="white" />
-              </CommitmentIcon>
-              <CommitmentTitle>Innovación</CommitmentTitle>
-              <CommitmentDescription>
-                Duis aute irure dolor in reprehenderit in voluptate.
-              </CommitmentDescription>
-            </CommitmentItem>
-
-            <CommitmentItem>
-              <CommitmentIcon bgColor="#dc2626">
-                <Heart size={40} color="white" />
-              </CommitmentIcon>
-              <CommitmentTitle>Confianza</CommitmentTitle>
-              <CommitmentDescription>
-                Excepteur sint occaecat cupidatat non proident.
-              </CommitmentDescription>
-            </CommitmentItem>
-          </Grid>
+          <CommitmentListItems />
+          
         </SectionContainer>
       </GraySection>
 
@@ -578,7 +406,6 @@ const LandingPage = () => {
               message={modalMessage}
               type={modalType}
             />
-
           </FormContainer>
         </SectionContainer>
       </GradientSection>
@@ -999,6 +826,14 @@ const ImagePlaceholder = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+`;
+
+const StyledImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 `;
 
 const FeatureList = styled.div`
@@ -1123,11 +958,11 @@ const SubmitButton = styled.button`
 
   &:disabled {
     background: #a8b9f0;
-    color: #ffffff; 
+    color: #ffffff;
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
-    opacity: 0.7; 
+    opacity: 0.7;
   }
 `;
 
