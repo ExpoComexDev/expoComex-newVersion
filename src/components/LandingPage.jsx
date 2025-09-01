@@ -1,29 +1,15 @@
 import React, { useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
-import {
-  Mail,
-  Phone,
-  MapPin,
-  Send,
-  Globe,
-  Ship,
-  Users,
-  Target,
-  Heart,
-  Package,
-  CheckCircle,
-  Star,
-  Menu,
-  X,
-} from "lucide-react";
+import { Send, Globe, Ship, Package } from "lucide-react";
 import Navbar from "./Navbar";
 import ProductCard from "./ProductCard";
-import FeatureListItems from "./FeatureListItems";
-import SmallModal from "./SmallModal";
+import AboutUsListItems from "./AboutUsListItems";
 import ObjectivesListItems from "./ObjectivesListItems";
+import CommitmentListItems from "./CommitmentListItems";
+import OurImportsListItems from "./OurImportsListItems";
+import SmallModal from "./SmallModal";
 import objectivesImg from "../img/objectivesImg.jpg";
 import aboutUsImg from "../img/aboutUsImg4.jpg";
-import CommitmentListItems from "./CommitmentListItems";
 
 const LandingPage = () => {
   const [formData, setFormData] = useState({
@@ -146,6 +132,7 @@ const LandingPage = () => {
   return (
     <Container>
       {/* Navigation */}
+
       <Navbar {...navbarProps} />
 
       {/* Hero Section */}
@@ -192,8 +179,9 @@ const LandingPage = () => {
                 <StyledImage src={aboutUsImg} alt="About us" />
               </ImagePlaceholder>
             </div>
+
             <FeatureList>
-              <FeatureListItems />
+              <AboutUsListItems />
             </FeatureList>
           </ObjectiveGrid>
         </SectionContainer>
@@ -211,6 +199,7 @@ const LandingPage = () => {
             construyendo relaciones sólidas y duraderas a través de un servicio
             de excelencia y resultados comprobados.
           </SectionSubtitle>
+
           <ProductCard />
         </SectionContainer>
       </GraySection>
@@ -255,7 +244,6 @@ const LandingPage = () => {
           </SectionSubtitle>
 
           <CommitmentListItems />
-          
         </SectionContainer>
       </GraySection>
 
@@ -270,58 +258,8 @@ const LandingPage = () => {
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </SectionSubtitle>
 
-          <Grid cols="3">
-            <Card>
-              <CardContent>
-                <Package
-                  size={48}
-                  color="#ea580c"
-                  style={{ marginBottom: "1.5rem" }}
-                />
-                <CardTitle style={{ color: "#111827" }}>
-                  Productos Electrónicos
-                </CardTitle>
-                <CardDescription>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </CardDescription>
-              </CardContent>
-            </Card>
+          <OurImportsListItems />
 
-            <Card>
-              <CardContent>
-                <Ship
-                  size={48}
-                  color="#2563eb"
-                  style={{ marginBottom: "1.5rem" }}
-                />
-                <CardTitle style={{ color: "#111827" }}>
-                  Maquinaria Industrial
-                </CardTitle>
-                <CardDescription>
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat.
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent>
-                <Globe
-                  size={48}
-                  color="#059669"
-                  style={{ marginBottom: "1.5rem" }}
-                />
-                <CardTitle style={{ color: "#111827" }}>
-                  Materias Primas
-                </CardTitle>
-                <CardDescription>
-                  Duis aute irure dolor in reprehenderit in voluptate velit esse
-                  cillum dolore eu fugiat nulla pariatur.
-                </CardDescription>
-              </CardContent>
-            </Card>
-          </Grid>
         </SectionContainer>
       </WhiteSection>
 
@@ -651,7 +589,7 @@ const HeroTitle = styled.h1`
   animation: ${pulse} 3s ease-in-out infinite;
 
   @media (min-width: 768px) {
-    font-size: 2.5rem;
+    font-size: 4rem;
   }
 `;
 
