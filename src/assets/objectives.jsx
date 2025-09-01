@@ -1,4 +1,4 @@
-import { Globe, Target, Heart } from "lucide-react";
+import { Globe, Target, Heart, TrendingUp } from "lucide-react";
 
 export const objectives = [
   {
@@ -10,7 +10,7 @@ export const objectives = [
   },
   {
     id: 2,
-    icon: <Globe size={100} color="#059669" />,
+    icon: <TrendingUp size={100} color="#059669" />,
     title: "Visión",
     description:
       "Aspiramos a ser líderes en el sector, reconocidos por nuestra capacidad de innovar y adaptarnos a las necesidades del mercado. Queremos ser tu socio de confianza en importación, creando valor a largo plazo a través de la excelencia y la confianza.",
