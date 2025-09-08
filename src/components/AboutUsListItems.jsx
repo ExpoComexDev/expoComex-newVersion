@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { features } from "../assets/features";
 import { CheckCircle } from "lucide-react";
 
-const FeatureListItems = () => {
+const AboutUsListItems = () => {
   return (
     <>
       {features.map((feature) => (
@@ -44,4 +44,4 @@ const FeatureContent = styled.div`
   }
 `;
 
-export default FeatureListItems;
+export default AboutUsListItems;

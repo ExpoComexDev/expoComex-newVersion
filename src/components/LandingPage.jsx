@@ -1,29 +1,15 @@
 import React, { useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
-import {
-  Mail,
-  Phone,
-  MapPin,
-  Send,
-  Globe,
-  Ship,
-  Users,
-  Target,
-  Heart,
-  Package,
-  CheckCircle,
-  Star,
-  Menu,
-  X,
-} from "lucide-react";
 import Navbar from "./Navbar";
 import ProductCard from "./ProductCard";
-import FeatureListItems from "./FeatureListItems";
-import SmallModal from "./SmallModal";
+import AboutUsListItems from "./AboutUsListItems";
 import ObjectivesListItems from "./ObjectivesListItems";
+import CommitmentListItems from "./CommitmentListItems";
+import OurImportsListItems from "./OurImportsListItems";
+import SmallModal from "./SmallModal";
+import ContactForm from "./ContactForm";
 import objectivesImg from "../img/objectivesImg.jpg";
 import aboutUsImg from "../img/aboutUsImg4.jpg";
-import CommitmentListItems from "./CommitmentListItems";
 
 const LandingPage = () => {
   const [formData, setFormData] = useState({
@@ -31,78 +17,13 @@ const LandingPage = () => {
     email: "",
     mensaje: "",
   });
+  const [errors, setErrors] = useState({});
   const [activeSection, setActiveSection] = useState("inicio");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [messageLoading, setMessageLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState("");
   const [modalMessage, setModalMessage] = useState("");
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const closeModal = () => {
-    setShowModal(false);
-    if (modalType === "success") {
-      setFormData({ nombre: "", email: "", mensaje: "" });
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e?.preventDefault?.();
-
-    if (!formData.nombre || !formData.email || !formData.mensaje) {
-      alert("Por favor completa todos los campos obligatorios.");
-      return;
-    }
-    setMessageLoading(true);
-    try {
-      const response = await fetch("https://formspree.io/f/xnnzenab", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        setModalType("success");
-        setModalMessage(
-          "¡Mensaje enviado correctamente! Pronto nos pondremos en contacto contigo."
-        );
-      } else {
-        setModalType("error");
-        setModalMessage(
-          "Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo más tarde."
-        );
-      }
-    } catch (error) {
-      console.error("Error al enviar el formulario:", error);
-      setModalType("error");
-      setModalMessage(
-        "Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo más tarde."
-      );
-    } finally {
-      setMessageLoading(false);
-      setShowModal(true);
-    }
-  };
-
-  const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      const offsetTop = element.offsetTop - 80;
-      window.scrollTo({
-        top: offsetTop,
-        behavior: "smooth",
-      });
-      setActiveSection(sectionId);
-      setIsMenuOpen(false);
-    }
-  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -136,6 +57,90 @@ const LandingPage = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    setErrors((prev) => ({
+      ...prev,
+      [name]: "",
+    }));
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    if (modalType === "success") {
+      setFormData({ nombre: "", email: "", mensaje: "" });
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e?.preventDefault?.();
+
+    const newErrors = {};
+    if (!formData.nombre.trim()) {
+      newErrors.nombre = "Este campo es obligatorio";
+    }
+    if (!formData.email.trim()) {
+      newErrors.email = "Este campo es obligatorio";
+    }
+    if (!formData.mensaje.trim()) {
+      newErrors.mensaje = "Este campo es obligatorio";
+    }
+console.log({newErrors})
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+    console.log({errors})
+
+    setMessageLoading(true);
+
+    try {
+      const response = await fetch("https://formspree.io/f/meolvbry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setModalType("success");
+        setModalMessage(
+          "¡Mensaje enviado correctamente! Pronto nos pondremos en contacto contigo."
+        );
+      } else {
+        setModalType("error");
+        setModalMessage(
+          "Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo más tarde."
+        );
+      }
+    } catch (error) {
+      console.error("Error al enviar el formulario:", error);
+      setModalType("error");
+      setModalMessage(
+        "Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo más tarde."
+      );
+    } finally {
+      setMessageLoading(false);
+      setShowModal(true);
+    }
+  };
+  console.log({errors})
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const offsetTop = element.offsetTop - 80;
+      window.scrollTo({
+        top: offsetTop,
+        behavior: "smooth",
+      });
+      setActiveSection(sectionId);
+      setIsMenuOpen(false);
+    }
+  };
+
   const navbarProps = {
     activeSection: activeSection,
     scrollToSection: scrollToSection,
@@ -143,9 +148,18 @@ const LandingPage = () => {
     setIsMenuOpen: setIsMenuOpen,
   };
 
+  const contactFormProps = {
+    formData: formData,
+    handleInputChange: handleInputChange,
+    handleSubmit: handleSubmit,
+    messageLoading: messageLoading,
+    errors: errors,
+  };
+
   return (
     <Container>
       {/* Navigation */}
+
       <Navbar {...navbarProps} />
 
       {/* Hero Section */}
@@ -192,8 +206,9 @@ const LandingPage = () => {
                 <StyledImage src={aboutUsImg} alt="About us" />
               </ImagePlaceholder>
             </div>
+
             <FeatureList>
-              <FeatureListItems />
+              <AboutUsListItems />
             </FeatureList>
           </ObjectiveGrid>
         </SectionContainer>
@@ -211,6 +226,7 @@ const LandingPage = () => {
             construyendo relaciones sólidas y duraderas a través de un servicio
             de excelencia y resultados comprobados.
           </SectionSubtitle>
+
           <ProductCard />
         </SectionContainer>
       </GraySection>
@@ -255,7 +271,6 @@ const LandingPage = () => {
           </SectionSubtitle>
 
           <CommitmentListItems />
-          
         </SectionContainer>
       </GraySection>
 
@@ -266,62 +281,13 @@ const LandingPage = () => {
             Nuestras Importaciones
           </SectionTitle>
           <SectionSubtitle>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Simplificá tus operaciones con nuestro servicio de importación.
+            Contamos con la experiencia necesaria para manejar tus envíos, sean
+            por tierra, mar o aire.  Convertite en nuestro aliado estratégico,
+            garantizamos un proceso de importación confiable y eficiente.
           </SectionSubtitle>
 
-          <Grid cols="3">
-            <Card>
-              <CardContent>
-                <Package
-                  size={48}
-                  color="#ea580c"
-                  style={{ marginBottom: "1.5rem" }}
-                />
-                <CardTitle style={{ color: "#111827" }}>
-                  Productos Electrónicos
-                </CardTitle>
-                <CardDescription>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent>
-                <Ship
-                  size={48}
-                  color="#2563eb"
-                  style={{ marginBottom: "1.5rem" }}
-                />
-                <CardTitle style={{ color: "#111827" }}>
-                  Maquinaria Industrial
-                </CardTitle>
-                <CardDescription>
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat.
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent>
-                <Globe
-                  size={48}
-                  color="#059669"
-                  style={{ marginBottom: "1.5rem" }}
-                />
-                <CardTitle style={{ color: "#111827" }}>
-                  Materias Primas
-                </CardTitle>
-                <CardDescription>
-                  Duis aute irure dolor in reprehenderit in voluptate velit esse
-                  cillum dolore eu fugiat nulla pariatur.
-                </CardDescription>
-              </CardContent>
-            </Card>
-          </Grid>
+          <OurImportsListItems />
         </SectionContainer>
       </WhiteSection>
 
@@ -338,77 +304,17 @@ const LandingPage = () => {
             <p>¡Le responderemos tan pronto como nos sea posible!</p>
           </SectionSubtitle>
 
-          <FormContainer onSubmit={handleSubmit}>
-            <FormGroup>
-              <Label htmlFor="nombre">
-                Nombre{" "}
-                <span style={{ color: "#df382c", fontWeight: "bold" }}>*</span>
-              </Label>
-              <Input
-                type="text"
-                id="nombre"
-                name="nombre"
-                value={formData.nombre}
-                onChange={handleInputChange}
-                required
-                placeholder="Ingresá tu nombre"
-              />
-            </FormGroup>
+          <ContactForm {...contactFormProps} />
 
-            <FormGroup>
-              <Label htmlFor="email">
-                Email{" "}
-                <span style={{ color: "#df382c", fontWeight: "bold" }}>*</span>
-              </Label>
-              <Input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                required
-                placeholder="tu@email.com"
-              />
-            </FormGroup>
+        </SectionContainer>
+      </GradientSection>
 
-            <FormGroup>
-              <Label htmlFor="mensaje">
-                Mensaje{" "}
-                <span style={{ color: "#df382c", fontWeight: "bold" }}>*</span>
-              </Label>
-              <Textarea
-                id="mensaje"
-                name="mensaje"
-                value={formData.mensaje}
-                onChange={handleInputChange}
-                required
-                placeholder="Escribí tu mensaje aquí..."
-              />
-            </FormGroup>
-
-            <SubmitButton type="submit" disabled={messageLoading}>
-              {messageLoading ? (
-                <>
-                  <Spinner animation="border" size="sm" />
-                  <span>Enviando...</span>
-                </>
-              ) : (
-                <>
-                  <Send size={20} />
-                  <span>Enviar Mensaje</span>
-                </>
-              )}
-            </SubmitButton>
-
-            <SmallModal
+      <SmallModal
               show={showModal}
               onClose={closeModal}
               message={modalMessage}
               type={modalType}
             />
-          </FormContainer>
-        </SectionContainer>
-      </GradientSection>
 
       {/* Footer */}
       <Footer>
@@ -446,150 +352,10 @@ const pulse = keyframes`
   }
 `;
 
-const spin = keyframes`
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-`;
-
 // Styled Components
 const Container = styled.div`
   min-height: 100vh;
   background-color: #f9fafb;
-`;
-
-const Nav = styled.nav`
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  z-index: 50;
-  transition: all 0.3s ease;
-`;
-
-const NavContainer = styled.div`
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 1rem;
-
-  @media (min-width: 640px) {
-    padding: 0 1.5rem;
-  }
-
-  @media (min-width: 1024px) {
-    padding: 0 2rem;
-  }
-`;
-
-const NavContent = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 4rem;
-`;
-
-const Logo = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-`;
-
-const LogoText = styled.span`
-  font-size: 1.25rem;
-  font-weight: bold;
-  color: #111827;
-`;
-
-const NavLinks = styled.div`
-  display: none;
-  gap: 2rem;
-
-  @media (min-width: 1024px) {
-    display: flex;
-  }
-`;
-
-const NavLink = styled.span`
-  color: #374151;
-  cursor: pointer;
-  padding: 0.5rem 0.75rem;
-  border-radius: 0.5rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition: all 0.3s ease;
-
-  &:hover {
-    color: #2563eb;
-    transform: scale(1.05);
-  }
-
-  ${(props) =>
-    props.active &&
-    `
-    color: #2563eb;
-    font-weight: 600;
-    background-color: #eff6ff;
-  `}
-`;
-
-const MobileMenuButton = styled.button`
-  display: block;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  border: none;
-  background: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: #f3f4f6;
-  }
-
-  @media (min-width: 1024px) {
-    display: none;
-  }
-`;
-
-const MobileMenu = styled.div`
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  background: white;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  border-top: 1px solid #e5e7eb;
-
-  @media (min-width: 1024px) {
-    display: none;
-  }
-`;
-
-const MobileMenuContent = styled.div`
-  padding: 1rem 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-`;
-
-const MobileMenuLink = styled.span`
-  display: block;
-  padding: 0.5rem 1rem;
-  color: #374151;
-  cursor: pointer;
-  transition: all 0.3s ease;
-
-  &:hover {
-    color: #2563eb;
-    background-color: #f9fafb;
-  }
-
-  ${(props) =>
-    props.active &&
-    `
-    color: #2563eb;
-    font-weight: 600;
-  `}
 `;
 
 const HeroSection = styled.section`
@@ -651,7 +417,7 @@ const HeroTitle = styled.h1`
   animation: ${pulse} 3s ease-in-out infinite;
 
   @media (min-width: 768px) {
-    font-size: 2.5rem;
+    font-size: 4rem;
   }
 `;
 
@@ -774,51 +540,6 @@ const SectionSubtitle = styled.p`
   margin-right: auto;
 `;
 
-const Grid = styled.div`
-  display: grid;
-  gap: 2rem;
-
-  @media (min-width: 768px) {
-    grid-template-columns: ${(props) =>
-      props.cols === "2"
-        ? "repeat(2, 1fr)"
-        : props.cols === "3"
-        ? "repeat(3, 1fr)"
-        : props.cols === "4"
-        ? "repeat(4, 1fr)"
-        : "1fr"};
-  }
-
-  ${(props) => props.alignItems && `align-items: ${props.alignItems};`}
-`;
-
-const Card = styled.div`
-  background: white;
-  border-radius: 1rem;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  transition: all 0.3s ease;
-
-  &:hover {
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
-    transform: translateY(-8px);
-  }
-`;
-
-const CardContent = styled.div`
-  padding: 2rem;
-`;
-
-const CardTitle = styled.h3`
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-`;
-
-const CardDescription = styled.p`
-  color: #6b7280;
-  line-height: 1.6;
-`;
-
 const ImagePlaceholder = styled.div`
   background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
   border-radius: 1rem;
@@ -840,130 +561,6 @@ const FeatureList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-`;
-
-const CommitmentItem = styled.div`
-  text-align: center;
-`;
-
-const CommitmentIcon = styled.div`
-  background: ${(props) => props.bgColor || "#2563eb"};
-  border-radius: 50%;
-  height: 5rem;
-  width: 5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 1rem;
-`;
-
-const CommitmentTitle = styled.h3`
-  font-size: 1.25rem;
-  font-weight: bold;
-  color: #111827;
-  margin-bottom: 0.5rem;
-`;
-
-const CommitmentDescription = styled.p`
-  color: #6b7280;
-  line-height: 1.6;
-`;
-
-const FormContainer = styled.form`
-  background: white;
-  border-radius: 1rem;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  padding: 2rem;
-  max-width: 520px;
-  margin: 0 auto;
-  box-sizing: border-box;
-`;
-
-const FormGroup = styled.div`
-  margin-bottom: 1.5rem;
-`;
-
-const Label = styled.label`
-  display: block;
-  color: #374151;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-`;
-
-const Input = styled.input`
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border: 1px solid #d1d5db;
-  border-radius: 0.5rem;
-  transition: all 0.3s ease;
-  font-size: 1rem;
-  font-family: inherit;
-  box-sizing: border-box;
-
-  &:focus {
-    outline: none;
-    border-color: transparent;
-    box-shadow: 0 0 0 2px #2563eb;
-  }
-
-  &::placeholder {
-    color: #9ca3af;
-  }
-`;
-
-const Textarea = styled.textarea`
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border: 1px solid #d1d5db;
-  border-radius: 0.5rem;
-  transition: all 0.3s ease;
-  font-size: 1rem;
-  height: 8rem;
-  resize: none;
-  font-family: inherit;
-  box-sizing: border-box;
-
-  &:focus {
-    outline: none;
-    border-color: transparent;
-    box-shadow: 0 0 0 2px #2563eb;
-  }
-
-  &::placeholder {
-    color: #9ca3af;
-  }
-`;
-
-const SubmitButton = styled.button`
-  width: 100%;
-  background: linear-gradient(90deg, #2563eb 0%, #0891b2 100%);
-  color: white;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  font-size: 1rem;
-
-  &:hover {
-    background: linear-gradient(90deg, #1d4ed8 0%, #0e7490 100%);
-    transform: scale(1.05);
-  }
-
-  &:disabled {
-    background: #a8b9f0;
-    color: #ffffff;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-    opacity: 0.7;
-  }
 `;
 
 const Footer = styled.footer`
@@ -1002,12 +599,6 @@ const FooterEmail = styled.span`
   }
 `;
 
-const StarRating = styled.div`
-  display: flex;
-  gap: 0.25rem;
-  margin-top: 1rem;
-`;
-
 const ObjectiveGrid = styled.div`
   display: grid;
   gap: 3rem;
@@ -1016,33 +607,6 @@ const ObjectiveGrid = styled.div`
   @media (min-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
   }
-`;
-
-const ObjectiveFeature = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-
-  h3 {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #111827;
-    margin-bottom: 0.5rem;
-  }
-
-  p {
-    color: #6b7280;
-    line-height: 1.6;
-  }
-`;
-
-const Spinner = styled.div`
-  border: 4px solid rgba(0, 0, 0, 0.1);
-  border-left-color: #02488a;
-  border-radius: 50%;
-  width: 18px;
-  height: 18px;
-  animation: ${spin} 1s linear infinite;
 `;
 
 export default LandingPage;

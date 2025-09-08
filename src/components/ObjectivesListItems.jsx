@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from "styled-components";
-import { objectives } from '../assets/objective';
+import { objectives } from '../assets/objectives';
 const ObjectivesListItems = () => {
   return (
     <>
