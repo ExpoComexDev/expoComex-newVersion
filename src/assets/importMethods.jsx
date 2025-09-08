@@ -1,22 +1,22 @@
-import { Globe, Ship, Package } from "lucide-react";
+import { Ship, Truck, Plane } from "lucide-react";
 
 export const importMethods = [
   {
     id: 1,
-    icon: <Package size={48} color="#ea580c" />,
-    title: "Aéreo",
-    description: "Importación por aire",
+    icon: <Truck size={48} color="#ea580c" />,
+    title: "Terrestre",
+    description: "Ideal para envíos regionales y de corta distancia, garantizando entregas rápidas y una trazabilidad completa de tu mercancía.",
   },
   {
     id: 2,
     icon: <Ship size={48} color="#2563eb" />,
     title: "Marítimo",
-    description: "Importación por mar",
+    description: "La opción más eficiente para grandes volúmenes de carga y rutas internacionales, ofreciendo un costo competitivo y máxima seguridad en cada contenedor.",
   },
   {
     id: 3,
-    icon: <Globe size={48} color="#059669" />,
-    title: "Terrestre",
-    description: "Importación por tierra",
+    icon: <Plane size={48} color="#059669" />,
+    title: "Aéreo",
+    description: "La solución más rápida para envíos urgentes y de alto valor, acortando los tiempos de tránsito y optimizando tus plazos de entrega.",
   },
 ];

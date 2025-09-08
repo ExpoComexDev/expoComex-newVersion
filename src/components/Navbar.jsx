@@ -1,5 +1,5 @@
 import React from 'react'
-import {Globe,Menu,X} from "lucide-react";
+import { Globe,Menu,X } from "lucide-react";
 import styled from "styled-components";
 
 const Navbar = ({
