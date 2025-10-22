@@ -15,9 +15,9 @@ const Navbar = ({
           <NavContent>
             <Logo>
               <Globe
-                style={{ height: "2rem", width: "2rem", color: "#2563eb" }}
+                style={{ height: "3rem", width: "3rem", color: "#2563eb" }}
               />
-              <LogoText>ExoComex SRL</LogoText>
+              <LogoText>ExpoComex SRL</LogoText>
             </Logo>
 
             {/* Desktop Menu */}
@@ -38,7 +38,13 @@ const Navbar = ({
                 onClick={() => scrollToSection("clientes")}
                 active={activeSection === "clientes"}
               >
-                Productos
+                Marcas
+              </NavLink>
+              <NavLink
+                onClick={() => scrollToSection("importaciones")}
+                active={activeSection === "importaciones"}
+              >
+                Importaciones
               </NavLink>
               <NavLink
                 onClick={() => scrollToSection("objetivo")}
@@ -51,12 +57,6 @@ const Navbar = ({
                 active={activeSection === "compromiso"}
               >
                 Compromiso
-              </NavLink>
-              <NavLink
-                onClick={() => scrollToSection("importaciones")}
-                active={activeSection === "importaciones"}
-              >
-                Importaciones
               </NavLink>
               <NavLink
                 onClick={() => scrollToSection("contacto")}
@@ -92,7 +92,13 @@ const Navbar = ({
                   onClick={() => scrollToSection("clientes")}
                   active={activeSection === "clientes"}
                 >
-                  Clientes
+                  Marcas
+                </MobileMenuLink>
+                <MobileMenuLink
+                  onClick={() => scrollToSection("importaciones")}
+                  active={activeSection === "importaciones"}
+                >
+                  Importaciones
                 </MobileMenuLink>
                 <MobileMenuLink
                   onClick={() => scrollToSection("objetivo")}
@@ -105,12 +111,6 @@ const Navbar = ({
                   active={activeSection === "compromiso"}
                 >
                   Compromiso
-                </MobileMenuLink>
-                <MobileMenuLink
-                  onClick={() => scrollToSection("importaciones")}
-                  active={activeSection === "importaciones"}
-                >
-                  Importaciones
                 </MobileMenuLink>
                 <MobileMenuLink
                   onClick={() => scrollToSection("contacto")}
@@ -156,7 +156,7 @@ const NavContent = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 4rem;
+  height: 6rem;
 `;
 
 const Logo = styled.div`
@@ -166,8 +166,9 @@ const Logo = styled.div`
 `;
 
 const LogoText = styled.span`
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: bold;
+  cursor: default;
   color: #111827;
 `;
 
@@ -185,7 +186,7 @@ const NavLink = styled.span`
   cursor: pointer;
   padding: 0.5rem 0.75rem;
   border-radius: 0.5rem;
-  font-size: 0.875rem;
+  font-size: 1.2rem;
   font-weight: 500;
   transition: all 0.3s ease;
 
