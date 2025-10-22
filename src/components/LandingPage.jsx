@@ -10,6 +10,10 @@ import SmallModal from "./SmallModal";
 import ContactForm from "./ContactForm";
 import objectivesImg from "../img/objectivesImg.jpg";
 import aboutUsImg from "../img/aboutUsImg4.jpg";
+import logo from "../img/expocomex-logo.png";
+import { Mail, Linkedin } from 'lucide-react';
+import backgroundImg from "../img/test2.jpg";
+import BusinessAreasListItems from "./BusinessAreasItems";
 
 const LandingPage = () => {
   const [formData, setFormData] = useState({
@@ -89,12 +93,12 @@ const LandingPage = () => {
     if (!formData.mensaje.trim()) {
       newErrors.mensaje = "Este campo es obligatorio";
     }
-console.log({newErrors})
+    console.log({ newErrors })
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
-    console.log({errors})
+    console.log({ errors })
 
     setMessageLoading(true);
 
@@ -127,7 +131,7 @@ console.log({newErrors})
       setShowModal(true);
     }
   };
-  console.log({errors})
+  console.log({ errors })
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -166,16 +170,20 @@ console.log({newErrors})
       <HeroSection id="inicio">
         <HeroBackground />
         <HeroOverlay />
-        <HeroPattern />
 
         <HeroContent>
           <HeroTitle>
-            Empresa Impo/Exportadora
-            <HeroSubtitle>Te conectamos con el mundo</HeroSubtitle>
+            From the world to your company at a click
+            <HeroSubtitle>
+              Ofrecemos seguridad y confianza con mas de 13 años de experiencia en el rubro.
+            </HeroSubtitle>
           </HeroTitle>
-          <HeroDescription>
-            Ofrecemos seguridad y confianza con mas de 10 años de experiencia.
-          </HeroDescription>
+          <HeroDescriptionOne>
+            Especializados en la importación de equipos, maquinarias, repuestos, herramientas, insumos, y materias primas;
+          </HeroDescriptionOne>
+          <HeroDescriptionTwo>
+            brindando soluciones integrales a los sectores de transporte, minería, petróleo y química, entre otras.
+          </HeroDescriptionTwo>
           <HeroButtons>
             <PrimaryButton onClick={() => scrollToSection("contacto")}>
               Contactanos
@@ -193,16 +201,21 @@ console.log({newErrors})
           <SectionTitle style={{ color: "#111827" }}>
             Sobre Nosotros
           </SectionTitle>
-          <SectionSubtitle>
-            Somos una organización joven y dinámica, con años de experiencia en
-            el rubro. Combinamos la trayectoria de profesionales experimentados
-            con la agilidad de una nueva perspectiva.
-          </SectionSubtitle>
+          <SectionSubtitleOne>
+            Somos una empresa con más de 13 años de sólida trayectoria en el rubro de la importación y
+            el comercio exterior. Contamos con un equipo de profesionales altamente especializados que
+            garantizan la eficiencia y seguridad en cada operación.
+          </SectionSubtitleOne>
+          <SectionSubtitleTwo>
+            Nuestra amplia experiencia se extiende
+            a través de una red global activa que incluye países clave como Argentina, China, Alemania,
+            Reino Unido, Italia, Estados Unidos, India, España, y Japón, entre otros. Esta presencia
+            internacional y especialización nos permite ofrecer soluciones logísticas robustas y confiables para tu negocio.
+          </SectionSubtitleTwo>
 
           <ObjectiveGrid>
             <div>
               <ImagePlaceholder>
-                {/* <Ship size={128} color="white" /> */}
                 <StyledImage src={aboutUsImg} alt="About us" />
               </ImagePlaceholder>
             </div>
@@ -214,34 +227,61 @@ console.log({newErrors})
         </SectionContainer>
       </WhiteSection>
 
-      {/* Nuestros Productos */}
+      {/* Nuestras Marcas */}
       <GraySection id="clientes">
         <SectionContainer>
           <SectionTitle style={{ color: "#111827" }}>
-            Nuestros principales productos
+            Nuestras principales Marcas
           </SectionTitle>
-          <SectionSubtitle>
-            Presentamos a continuación una selección de las los principales
-            productos con los que hemos trabajado de manera exitosa,
-            construyendo relaciones sólidas y duraderas a través de un servicio
-            de excelencia y resultados comprobados.
-          </SectionSubtitle>
+          <SectionSubtitleTwo>
+            Presentamos a continuación una selección de las principales marcas
+            con los que hemos trabajado de manera exitosa, construyendo relaciones sólidas
+            y duraderas a través de un servicio de excelencia y resultados comprobados.
+          </SectionSubtitleTwo>
 
           <ProductCard />
         </SectionContainer>
       </GraySection>
 
+      {/* Nuestras Importaciones */}
+      <WhiteSection id="importaciones">
+        <SectionContainer>
+          <SectionMainTitle style={{ color: "#111827" }}>
+            Nuestras Importaciones
+          </SectionMainTitle>
+          <SectionSubtitleTwo>
+            Simplificá tus operaciones de comercio exterior con nuestro servicio integral de importación.
+            Contamos con la experiencia necesaria para gestionar tus envíos de punta a punta, utilizando
+            todos los medios necesarios: tierra, mar y aire. Somos especialistas en manejar cualquier tipo de necesidades
+            para industrias de alta demanda garantizando un proceso confiable, eficiente y totalmente adaptado a las
+            demandas específicas de cada sector.
+          </SectionSubtitleTwo>
+          <SectionSubtitle>
+            Áreas de Negocio
+          </SectionSubtitle>
+
+          <BusinessAreasListItems />
+
+          <SectionSubtitle>
+            Medios de Importación
+          </SectionSubtitle>
+
+          <OurImportsListItems />
+
+        </SectionContainer>
+      </WhiteSection>
+
       {/* Nuestro Objetivo */}
-      <WhiteSection id="objetivo">
+      <GraySection id="objetivo">
         <SectionContainer>
           <SectionTitle style={{ color: "#111827" }}>
             Nuestro Objetivo
           </SectionTitle>
-          <SectionSubtitle>
+          <SectionSubtitleTwo>
             Te ayudamos a importar lo que necesitas. Diseñamos una propuesta
             integral para tu comodidad, encargándonos de todo el proceso de
             punta a punta.
-          </SectionSubtitle>
+          </SectionSubtitleTwo>
 
           <ObjectiveGrid>
             <FeatureList>
@@ -255,39 +295,22 @@ console.log({newErrors})
             </div>
           </ObjectiveGrid>
         </SectionContainer>
-      </WhiteSection>
+      </GraySection>
 
       {/* Nuestro Compromiso */}
-      <GraySection id="compromiso">
+      <WhiteSection id="compromiso">
         <SectionContainer>
           <SectionTitle style={{ color: "#111827" }}>
             Nuestro Compromiso
           </SectionTitle>
-          <SectionSubtitle>
+          <SectionSubtitleTwo>
             Nos dedicamos a simplificar la logística global para ti. Gracias a
             una amplia red de transporte aéreo, marítimo y terrestre, diseñamos
             la mejor estrategia de envío, optimizada para tus necesidades y que
             garantiza eficiencia en cada paso.
-          </SectionSubtitle>
+          </SectionSubtitleTwo>
 
           <CommitmentListItems />
-        </SectionContainer>
-      </GraySection>
-
-      {/* Nuestras Importaciones */}
-      <WhiteSection id="importaciones">
-        <SectionContainer>
-          <SectionTitle style={{ color: "#111827" }}>
-            Nuestras Importaciones
-          </SectionTitle>
-          <SectionSubtitle>
-            Simplificá tus operaciones con nuestro servicio de importación.
-            Contamos con la experiencia necesaria para manejar tus envíos, sean
-            por tierra, mar o aire.  Convertite en nuestro aliado estratégico,
-            garantizamos un proceso de importación confiable y eficiente.
-          </SectionSubtitle>
-
-          <OurImportsListItems />
         </SectionContainer>
       </WhiteSection>
 
@@ -295,14 +318,14 @@ console.log({newErrors})
       <GradientSection id="contacto">
         <SectionContainer>
           <SectionTitle style={{ color: "white" }}>Contacto</SectionTitle>
-          <SectionSubtitle style={{ color: "#bfdbfe" }}>
+          <SectionSubtitleTwo style={{ color: "#bfdbfe" }}>
             <p>
               Para cualquier consulta, pedido de información o solicitud de
               cotización, le pedimos que por favor complete el siguiente
               formulario.
             </p>
             <p>¡Le responderemos tan pronto como nos sea posible!</p>
-          </SectionSubtitle>
+          </SectionSubtitleTwo>
 
           <ContactForm {...contactFormProps} />
 
@@ -310,22 +333,32 @@ console.log({newErrors})
       </GradientSection>
 
       <SmallModal
-              show={showModal}
-              onClose={closeModal}
-              message={modalMessage}
-              type={modalType}
-            />
+        show={showModal}
+        onClose={closeModal}
+        message={modalMessage}
+        type={modalType}
+      />
 
       {/* Footer */}
       <Footer>
         <FooterContent>
+          <FooterLogo>
+            <img src={logo} alt="ExpoComex SRL" style={{ width: "50px", height: "50px" }} />
+            <LogoText>ExpoComex SRL</LogoText>
+          </FooterLogo>
           <FooterText>
-            © 2020 ExpoComex SRL. Todos los derechos reservados.
+            © 2012 ExpoComex SRL. Todos los derechos reservados.
           </FooterText>
-          <p style={{ color: "#9ca3af" }}>
-            Contacto: <FooterEmail>contacto@expocomexsrl.com</FooterEmail>
-          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", zIndex: "1000" }}>
+            <div style={{ color: "#9ca3af", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              <Mail size={16} color="#9ca3af" /> <FooterEmail>contacto@expocomexsrl.com</FooterEmail>
+            </div>
+            <div style={{ color: "#9ca3af", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              <Linkedin size={16} color="#9ca3af" /> <FooterSocials href="https://www.linkedin.com/company/expocomex" target="_blank">linkedin.com/company/expocomex</FooterSocials>
+            </div>
+          </div>
         </FooterContent>
+        <HeroPattern />
       </Footer>
     </Container>
   );
@@ -360,7 +393,7 @@ const Container = styled.div`
 
 const HeroSection = styled.section`
   position: relative;
-  min-height: 100vh;
+  min-height: 80vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -370,13 +403,16 @@ const HeroSection = styled.section`
 const HeroBackground = styled.div`
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #312e81 100%);
+  background-image: url(${backgroundImg}); 
+  background-size: cover;
+  background-position: center; 
 `;
 
 const HeroOverlay = styled.div`
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #312e81 100%);
+  opacity: 0.85;
 `;
 
 const HeroPattern = styled.div`
@@ -408,7 +444,7 @@ const HeroContent = styled.div`
   }
 `;
 
-const HeroTitle = styled.h1`
+const HeroTitle = styled.h2`
   font-size: 2.5rem;
   font-weight: bold;
   color: white;
@@ -428,10 +464,20 @@ const HeroSubtitle = styled.span`
   background-clip: text;
   color: transparent;
   font-size: 2rem;
+  line-height: 1.4;
   padding-top: 1.2rem;
 `;
 
-const HeroDescription = styled.p`
+const HeroDescriptionOne = styled.div`
+  font-size: 1.25rem;
+  color: #bfdbfe;
+
+  @media (min-width: 768px) {
+    font-size: 1.5rem;
+  }
+`;
+
+const HeroDescriptionTwo = styled.div`
   font-size: 1.25rem;
   color: #bfdbfe;
   margin-bottom: 2rem;
@@ -491,14 +537,26 @@ const PrimaryButton = styled.button`
 `; */
 
 const Section = styled.section`
-  padding: 5rem 1rem;
+  padding: 5rem 1rem 5rem 1rem;
 
   @media (min-width: 640px) {
-    padding: 5rem 1.5rem;
+    padding: 3rem 1.5rem 3rem 1.5rem;
   }
 
   @media (min-width: 1024px) {
-    padding: 5rem 2rem;
+    padding: 2.5rem 2rem 6rem 2rem;
+  }
+`;
+
+const ContactSection = styled.section`
+  padding: 5rem 2rem;
+
+  @media (min-width: 640px) {
+    padding: 3rem 3rem;
+  }
+
+  @media (min-width: 1024px) {
+    padding: 5.5rem 2rem;
   }
 `;
 
@@ -510,13 +568,13 @@ const GraySection = styled(Section)`
   background: #f3f4f6;
 `;
 
-const GradientSection = styled(Section)`
+const GradientSection = styled(ContactSection)`
   background: linear-gradient(135deg, #1e3a8a 0%, #7c3aed 100%);
 `;
 
 const SectionContainer = styled.div`
   max-width: 1280px;
-  margin: 0 auto;
+  margin: 0px auto;
 `;
 
 const SectionTitle = styled.h2`
@@ -530,12 +588,43 @@ const SectionTitle = styled.h2`
   }
 `;
 
-const SectionSubtitle = styled.p`
+const SectionMainTitle = styled.h1`
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1rem;
+
+  @media (min-width: 768px) {
+    font-size: 3rem;
+  }
+`;
+
+const SectionSubtitle = styled.h1`
+  font-size: 2rem;
+  color: #6b7280;
+    text-align: center;
+  margin-bottom: 4rem;
+  max-width: 840px;
+  margin-left: auto;
+  margin-right: auto;
+`;
+
+const SectionSubtitleOne = styled.p`
+  font-size: 1.25rem;
+  color: #6b7280;
+  text-align: center;
+  margin-bottom: 1rem;
+  max-width: 840px;
+  margin-left: auto;
+  margin-right: auto;
+`;
+
+const SectionSubtitleTwo = styled.p`
   font-size: 1.25rem;
   color: #6b7280;
   text-align: center;
   margin-bottom: 4rem;
-  max-width: 768px;
+  max-width: 770px;
   margin-left: auto;
   margin-right: auto;
 `;
@@ -564,9 +653,29 @@ const FeatureList = styled.div`
 `;
 
 const Footer = styled.footer`
-  background: #111827;
+  background: linear-gradient(135deg,rgb(0, 0, 0) 0%,rgb(21, 21, 21) 100%);
   color: white;
-  padding: 3rem 0;
+  padding: 5rem 0;
+  position: relative;
+  overflow: hidden;
+
+  @media (max-width: 770px) {
+      background: linear-gradient(to bottom,rgb(0, 0, 0) 0%,rgb(12, 12, 12) 100%);
+  }
+`;
+
+const FooterLogo = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const LogoText = styled.span`
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: default;
+  color:#e2e2e2;
+  padding-left: 1rem;
 `;
 
 const FooterContent = styled.div`
@@ -574,9 +683,14 @@ const FooterContent = styled.div`
   margin: 0 auto;
   padding: 0 1rem;
   text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-  @media (min-width: 640px) {
+  @media (max-width: 770px) {
     padding: 0 1.5rem;
+    flex-direction: column;
+    gap: 1rem;
   }
 
   @media (min-width: 1024px) {
@@ -587,15 +701,21 @@ const FooterContent = styled.div`
 const FooterText = styled.p`
   color: #9ca3af;
   margin-bottom: 1rem;
+  cursor: default;
 `;
 
 const FooterEmail = styled.span`
-  color: #60a5fa;
-  cursor: pointer;
-  transition: color 0.3s ease;
+  color:#efefef;
+  cursor: default;
+`;
 
+const FooterSocials = styled.a`
+  color:#efefef;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
   &:hover {
-    color: #93c5fd;
+    color: #9ca3af;
   }
 `;
 

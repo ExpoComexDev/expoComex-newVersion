@@ -1,16 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-import { products } from "../assets/products";
+import { brands } from "../assets/products";
 
 const ProductCard = () => {
   return (
     <>
       <Grid cols="3" alignItems="center">
-        {products.map((product) => (
-          <Card key={product.id}>
+        {brands.map((brand) => (
+          <Card key={brand.id}>
             <CardContent>
-              <CardTitle style={{ color: "#111827" }}>{product.name}</CardTitle>
-              <CardDescription>{product.description}</CardDescription>
+              {/* <CardTitle style={{ color: "#111827" }}>{product.name}</CardTitle> */}
+              {/* <CardDescription>{product.description}</CardDescription> */}
+              <img src={brand.image} alt={brand.name} style={{height: "100px", width: "270px"}} />
             </CardContent>
           </Card>
         ))}
@@ -23,15 +24,14 @@ const Grid = styled.div`
   display: grid;
   gap: 2rem;
 
-  @media (min-width: 768px) {
-    grid-template-columns: ${(props) =>
-      props.cols === "2"
-        ? "repeat(2, 1fr)"
-        : props.cols === "3"
-        ? "repeat(3, 1fr)"
-        : props.cols === "4"
-        ? "repeat(4, 1fr)"
-        : "1fr"};
+  grid-template-columns: repeat(1, 1fr);
+
+  @media (min-width: 680px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
   }
 
   ${(props) => props.alignItems && `align-items: ${props.alignItems};`}
@@ -51,6 +51,9 @@ const Card = styled.div`
 
 const CardContent = styled.div`
   padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const CardTitle = styled.h3`
