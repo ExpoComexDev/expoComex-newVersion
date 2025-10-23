@@ -65,7 +65,7 @@ const CommitmentIcon = styled.div`
 `;
 
 const CommitmentTitle = styled.h3`
-  font-size: 1.25rem;
+  font-size: 1.8rem;
   font-weight: bold;
   color: #111827;
   margin-bottom: 0.5rem;
@@ -74,6 +74,7 @@ const CommitmentTitle = styled.h3`
 const CommitmentDescription = styled.p`
   color: #6b7280;
   line-height: 1.6;
+      font-size: 1.2rem;
 `;
 
 export default BusinessAreasListItems;
