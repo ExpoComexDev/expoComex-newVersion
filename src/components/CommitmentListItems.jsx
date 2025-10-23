@@ -47,8 +47,8 @@ const CommitmentItem = styled.div`
 const CommitmentIcon = styled.div`
   background: ${(props) => props.bgColor || "#2563eb"};
   border-radius: 50%;
-  height: 5rem;
-  width: 5rem;
+  height: 7rem;
+  width: 7rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -56,7 +56,7 @@ const CommitmentIcon = styled.div`
 `;
 
 const CommitmentTitle = styled.h3`
-  font-size: 1.25rem;
+  font-size: 1.8rem;
   font-weight: bold;
   color: #111827;
   margin-bottom: 0.5rem;
@@ -65,6 +65,7 @@ const CommitmentTitle = styled.h3`
 const CommitmentDescription = styled.p`
   color: #6b7280;
   line-height: 1.6;
+  font-size: 1.2rem;
 `;
 
 export default CommitmentListItems;

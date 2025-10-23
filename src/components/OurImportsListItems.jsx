@@ -9,7 +9,7 @@ const OurImportsListItems = () => {
         {importMethods.map((importMethod) => (
           <Card key={importMethod.id}>
             <CardContent>
-              <div style={{ marginBottom: "1.5rem" }}>{importMethod.icon}</div>
+              <div>{importMethod.icon}</div>
               <CardTitle style={{ color: "#111827" }}>
                 {importMethod.title}
               </CardTitle>
@@ -54,10 +54,15 @@ const Card = styled.div`
 
 const CardContent = styled.div`
   padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 `;
 
 const CardTitle = styled.h3`
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: bold;
   margin-bottom: 1rem;
 `;
@@ -65,6 +70,7 @@ const CardTitle = styled.h3`
 const CardDescription = styled.p`
   color: #6b7280;
   line-height: 1.6;
+    font-size: 1.2rem;
 `;
 
 export default OurImportsListItems;

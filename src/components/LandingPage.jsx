@@ -13,6 +13,8 @@ import aboutUsImg from "../img/aboutUsImg4.jpg";
 import logo from "../img/expocomex-logo.png";
 import { Mail, Linkedin } from 'lucide-react';
 import backgroundImg from "../img/test2.jpg";
+import medal from "../img/medal.png";
+import schlegelLogo from "../img/schlegel-logo.png";
 import BusinessAreasListItems from "./BusinessAreasItems";
 
 const LandingPage = () => {
@@ -240,6 +242,13 @@ const LandingPage = () => {
           </SectionSubtitleTwo>
 
           <ProductCard />
+          <div style={{ display: "flex", justifyContent: "center", marginTop: "2rem" }}>
+            <ExclusiveBrandBox>
+              <img src={medal} style={{ width: "100px" }} />
+              Somos representantes exclusivos de
+              <img src={schlegelLogo} style={{ height: "120px", width: "300px" }} />
+            </ExclusiveBrandBox>
+          </div>
         </SectionContainer>
       </GraySection>
 
@@ -249,10 +258,13 @@ const LandingPage = () => {
           <SectionMainTitle style={{ color: "#111827" }}>
             Nuestras Importaciones
           </SectionMainTitle>
-          <SectionSubtitleTwo>
+          <SectionSubtitleOne>
             Simplificá tus operaciones de comercio exterior con nuestro servicio integral de importación.
             Contamos con la experiencia necesaria para gestionar tus envíos de punta a punta, utilizando
-            todos los medios necesarios: tierra, mar y aire. Somos especialistas en manejar cualquier tipo de necesidades
+            todos los medios necesarios: tierra, mar y aire.
+          </SectionSubtitleOne>
+          <SectionSubtitleTwo>
+            Somos especialistas en manejar cualquier tipo de necesidades
             para industrias de alta demanda garantizando un proceso confiable, eficiente y totalmente adaptado a las
             demandas específicas de cada sector.
           </SectionSubtitleTwo>
@@ -446,14 +458,16 @@ const HeroContent = styled.div`
 
 const HeroTitle = styled.h2`
   font-size: 2.5rem;
+  margin-top: 5rem;
   font-weight: bold;
   color: white;
   margin-bottom: 1.5rem;
   line-height: 1.1;
   animation: ${pulse} 3s ease-in-out infinite;
 
-  @media (min-width: 768px) {
+  @media (min-width: 945px) {
     font-size: 4rem;
+      margin-top: 7rem;
   }
 `;
 
@@ -472,7 +486,7 @@ const HeroDescriptionOne = styled.div`
   font-size: 1.25rem;
   color: #bfdbfe;
 
-  @media (min-width: 768px) {
+  @media (min-width: 945px) {
     font-size: 1.5rem;
   }
 `;
@@ -483,7 +497,7 @@ const HeroDescriptionTwo = styled.div`
   margin-bottom: 2rem;
   line-height: 1.6;
 
-  @media (min-width: 768px) {
+  @media (min-width: 945px) {
     font-size: 1.5rem;
   }
 `;
@@ -537,10 +551,10 @@ const PrimaryButton = styled.button`
 `; */
 
 const Section = styled.section`
-  padding: 5rem 1rem 5rem 1rem;
+  padding: 5rem 1.5rem 5rem 1.5rem;
 
   @media (min-width: 640px) {
-    padding: 3rem 1.5rem 3rem 1.5rem;
+    padding: 3rem 2.5rem 3rem 2.5rem;
   }
 
   @media (min-width: 1024px) {
@@ -632,7 +646,7 @@ const SectionSubtitleTwo = styled.p`
 const ImagePlaceholder = styled.div`
   background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
   border-radius: 1rem;
-  height: 24rem;
+  height: 30rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -661,6 +675,73 @@ const Footer = styled.footer`
 
   @media (max-width: 770px) {
       background: linear-gradient(to bottom,rgb(0, 0, 0) 0%,rgb(12, 12, 12) 100%);
+  }
+`;
+
+const ExclusiveBrandBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem 6rem;
+  color: rgb(55, 65, 81);
+  font-size: 2rem;
+  margin-top: 2rem;
+  width: 100%;
+  max-width: 400px;
+  
+  background: rgba(220, 252, 231, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 1.5rem;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      45deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent 70%
+    );
+    transform: rotate(45deg);
+    transition: all 0.6s ease;
+  }
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 
+      0 20px 40px rgba(16, 185, 129, 0.15),
+      0 0 0 1px rgba(16, 185, 129, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    background: rgba(209, 250, 229, 0.7);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+  }
+
+  &:hover::before {
+    left: 100%;
+  }
+
+  @media (max-width: 768px) {
+    padding: 1.5rem 2rem;
+    font-size: 1.5rem;
+  }
+
+  @media (max-width: 680px) {
+    max-width: 100%;
   }
 `;
 
@@ -724,7 +805,7 @@ const ObjectiveGrid = styled.div`
   gap: 3rem;
   align-items: center;
 
-  @media (min-width: 768px) {
+  @media (min-width: 900px) {
     grid-template-columns: repeat(2, 1fr);
   }
 `;
