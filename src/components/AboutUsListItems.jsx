@@ -9,9 +9,9 @@ const AboutUsListItems = () => {
       {features.map((feature) => (
         <FeatureItem key={feature.id}>
           <CheckCircle
-            size={24}
+            size={32}
             color="#10b981"
-            style={{ marginTop: "0.8rem", flexShrink: 0 }}
+            style={{ marginTop: "1.2rem", flexShrink: 0 }}
           />
           <FeatureContent>
             <h3>{feature.title}</h3>
@@ -31,7 +31,7 @@ const FeatureItem = styled.div`
 
 const FeatureContent = styled.div`
   h3 {
-    font-size: 1.25rem;
+    font-size: 2rem;
     font-weight: bold;
     color: #111827;
     margin-bottom: 0.5rem;
@@ -39,6 +39,7 @@ const FeatureContent = styled.div`
 
   p {
     color: #6b7280;
+    font-size: 1.2rem;
     line-height: 1.6;
     text-align: justify;
   }
