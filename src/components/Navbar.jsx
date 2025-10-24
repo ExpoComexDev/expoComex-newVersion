@@ -195,6 +195,11 @@ const NavLink = styled.span`
     transform: scale(1.05);
   }
 
+  @media (max-width: 1245px) {
+    padding: 0.5rem;
+    font-size: 1rem;
+  }
+
   ${(props) =>
     props.active &&
     `
