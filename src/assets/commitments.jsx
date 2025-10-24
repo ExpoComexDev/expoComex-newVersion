@@ -1,4 +1,4 @@
-import { Globe, Users, Heart, CheckCircle, Lightbulb, Handshake, BadgeCheck } from "lucide-react";
+import { Users, Lightbulb, Handshake, BadgeCheck } from "lucide-react";
 
 export const commitments = [
   {

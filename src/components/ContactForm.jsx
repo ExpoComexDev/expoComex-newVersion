@@ -8,6 +8,8 @@ const ContactForm = ({
     messageLoading = false,
     handleInputChange = () => {},
     handleSubmit = () => {},
+    isHuman = false,
+    handleHumanChange = () => {},
 }) => {
     console.log({errors})
   return (
@@ -24,7 +26,6 @@ const ContactForm = ({
                 name="nombre"
                 value={formData.nombre}
                 onChange={handleInputChange}
-                required
                 placeholder="Ingresá tu nombre"
                 error={!!errors.nombre} 
               />
@@ -42,7 +43,6 @@ const ContactForm = ({
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                required
                 placeholder="tu@email.com"
                 error={!!errors.email}
               />
@@ -59,14 +59,31 @@ const ContactForm = ({
                 name="mensaje"
                 value={formData.mensaje}
                 onChange={handleInputChange}
-                required
                 placeholder="Escribí tu mensaje aquí..."
                 error={!!errors.mensaje}
               />
               {errors.mensaje && <ErrorMessage>{errors.mensaje}</ErrorMessage>}
             </FormGroup>
 
-            <SubmitButton type="submit" disabled={messageLoading}>
+            <FormGroup>
+              <HumanVerificationContainer>
+                <CheckboxContainer>
+                  <CheckboxInput
+                    type="checkbox"
+                    id="human"
+                    checked={isHuman}
+                    onChange={handleHumanChange}
+                    error={!!errors.human}
+                  />
+                  <CheckboxLabel htmlFor="human">
+                    Este formulario está siendo enviado por un humano.{" "}
+                  </CheckboxLabel>
+                </CheckboxContainer>
+                {errors.human && <ErrorMessage>{errors.human}</ErrorMessage>}
+              </HumanVerificationContainer>
+            </FormGroup>
+
+            <SubmitButton type="submit" disabled={messageLoading || !isHuman}>
               {messageLoading ? (
                 <>
                   <Spinner animation="border" size="sm" />
@@ -199,6 +216,35 @@ const Spinner = styled.div`
   width: 18px;
   height: 18px;
   animation: ${spin} 1s linear infinite;
+`;
+
+const HumanVerificationContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`;
+
+const CheckboxContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+`;
+
+const CheckboxInput = styled.input`
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  
+  &:focus {
+    outline-offset: 2px;
+  }
+`;
+
+const CheckboxLabel = styled.label`
+  color: #374151;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
 `;
 
 export default ContactForm

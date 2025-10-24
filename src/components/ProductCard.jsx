@@ -56,7 +56,7 @@ const CardContent = styled.div`
   align-items: center;
 `;
 
-const CardTitle = styled.h3`
+/* const CardTitle = styled.h3`
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 1rem;
@@ -66,5 +66,5 @@ const CardDescription = styled.p`
   color: #6b7280;
   line-height: 1.6;
 `;
-
+ */
 export default ProductCard;

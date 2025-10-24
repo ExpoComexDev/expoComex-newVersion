@@ -31,17 +31,25 @@ const FeatureItem = styled.div`
 
 const FeatureContent = styled.div`
   h3 {
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: bold;
     color: #111827;
     margin-bottom: 0.5rem;
+
+      @media (min-width: 1245px) {
+      font-size: 2rem;
+    }
   }
 
   p {
     color: #6b7280;
-    font-size: 1.2rem;
+    font-size: 1rem;
     line-height: 1.6;
     text-align: justify;
+
+      @media (min-width: 1245px) {
+      font-size: 1.2rem;
+    }
   }
 `;
 
