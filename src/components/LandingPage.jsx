@@ -24,6 +24,7 @@ const LandingPage = () => {
     mensaje: "",
   });
   const [errors, setErrors] = useState({});
+  const [isHuman, setIsHuman] = useState(false);
   const [activeSection, setActiveSection] = useState("inicio");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [messageLoading, setMessageLoading] = useState(false);
@@ -75,32 +76,31 @@ const LandingPage = () => {
     }));
   };
 
+  const handleHumanChange = (e) => {
+    setIsHuman(e.target.checked);
+    setErrors((prev) => ({
+      ...prev,
+      human: "",
+    }));
+  };
+
   const closeModal = () => {
     setShowModal(false);
     if (modalType === "success") {
       setFormData({ nombre: "", email: "", mensaje: "" });
+      setIsHuman(false);
     }
   };
 
   const handleSubmit = async (e) => {
     e?.preventDefault?.();
 
-    const newErrors = {};
-    if (!formData.nombre.trim()) {
-      newErrors.nombre = "Este campo es obligatorio";
-    }
-    if (!formData.email.trim()) {
-      newErrors.email = "Este campo es obligatorio";
-    }
-    if (!formData.mensaje.trim()) {
-      newErrors.mensaje = "Este campo es obligatorio";
-    }
-    console.log({ newErrors })
+    const newErrors = handleValidations();
+    setErrors(newErrors);
+  
     if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
       return;
     }
-    console.log({ errors })
 
     setMessageLoading(true);
 
@@ -133,7 +133,53 @@ const LandingPage = () => {
       setShowModal(true);
     }
   };
-  console.log({ errors })
+
+  const handleValidations = () => {
+    const newErrors = {};
+  
+    const containsOnlySpecialCharsOrNumbers = (str) => {
+
+      const trimmedStr = str.trim();
+      if (trimmedStr === '') return true;
+      const hasLetters = /[a-zA-Z]/.test(trimmedStr);
+      
+      return !hasLetters;
+    };
+  
+    const nombreSinEspacios = formData.nombre.trim();
+    if (nombreSinEspacios === '') {
+      newErrors.nombre = "Este campo es obligatorio";
+    } else if (nombreSinEspacios.length < 3) {
+      newErrors.nombre = "El nombre debe tener al menos 3 letras";
+    } else if (containsOnlySpecialCharsOrNumbers(formData.nombre)) {
+      newErrors.nombre = "El nombre no puede consistir solo en números o caracteres especiales";
+    }
+  
+    const emailSinEspacios = formData.email.trim();
+    if (emailSinEspacios === '') {
+      newErrors.email = "Este campo es obligatorio";
+    } else if (emailSinEspacios.length < 10) {
+      newErrors.email = "El correo debe tener al menos 10 caracteres";
+    } else if (!emailSinEspacios.includes("@") || !emailSinEspacios.includes(".")) {
+      newErrors.email = "El correo no es válido. Debe incluir '@' y '.'";
+    }
+  
+    const mensajeSinEspacios = formData.mensaje.trim();
+    if (mensajeSinEspacios === '') {
+      newErrors.mensaje = "Este campo es obligatorio";
+    } else if (mensajeSinEspacios.length < 20) {
+      newErrors.mensaje = "El mensaje debe tener al menos 20 caracteres";
+    } else if (containsOnlySpecialCharsOrNumbers(formData.mensaje)) {
+      newErrors.mensaje = "El mensaje no puede consistir solo en números o caracteres especiales";
+    }
+
+    if (!isHuman) {
+      newErrors.human = "Debe confirmar que es humano";
+    }
+  
+    return newErrors;
+  };
+  
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -160,6 +206,8 @@ const LandingPage = () => {
     handleSubmit: handleSubmit,
     messageLoading: messageLoading,
     errors: errors,
+    isHuman: isHuman,
+    handleHumanChange: handleHumanChange,
   };
 
   return (
@@ -457,7 +505,7 @@ const HeroContent = styled.div`
 `;
 
 const HeroTitle = styled.h2`
-  font-size: 2.5rem;
+  font-size: 2.3rem;
   margin-top: 5rem;
   font-weight: bold;
   color: white;
@@ -466,8 +514,12 @@ const HeroTitle = styled.h2`
   animation: ${pulse} 3s ease-in-out infinite;
 
   @media (min-width: 945px) {
-    font-size: 4rem;
+    font-size: 3.6rem;
       margin-top: 7rem;
+  }
+  @media (min-width: 1245px) {
+    font-size: 4rem;
+    margin-top: 7rem;
   }
 `;
 
@@ -477,27 +529,31 @@ const HeroSubtitle = styled.span`
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  font-size: 2rem;
+  font-size: 1.6rem;
   line-height: 1.4;
   padding-top: 1.2rem;
+
+    @media (min-width: 1245px) {
+    font-size: 2rem;
+  }
 `;
 
 const HeroDescriptionOne = styled.div`
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   color: #bfdbfe;
 
-  @media (min-width: 945px) {
+  @media (min-width: 1245px) {
     font-size: 1.5rem;
   }
 `;
 
 const HeroDescriptionTwo = styled.div`
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   color: #bfdbfe;
   margin-bottom: 2rem;
   line-height: 1.6;
 
-  @media (min-width: 945px) {
+  @media (min-width: 1245px) {
     font-size: 1.5rem;
   }
 `;
@@ -592,35 +648,46 @@ const SectionContainer = styled.div`
 `;
 
 const SectionTitle = styled.h2`
-  font-size: 2.5rem;
+  font-size: 2.1rem;
   font-weight: bold;
   text-align: center;
   margin-bottom: 1rem;
 
   @media (min-width: 768px) {
+    font-size: 2.6rem;
+  }
+
+  @media (min-width: 1245px) {
     font-size: 3rem;
   }
 `;
 
 const SectionMainTitle = styled.h1`
-  font-size: 2.5rem;
+  font-size: 2.51rem;
   font-weight: bold;
   text-align: center;
   margin-bottom: 1rem;
 
   @media (min-width: 768px) {
+    font-size: 2.6rem;
+  }
+  @media (min-width: 1245px) {
     font-size: 3rem;
   }
 `;
 
 const SectionSubtitle = styled.h1`
-  font-size: 2rem;
+  font-size: 1.8rem;
   color: #6b7280;
     text-align: center;
   margin-bottom: 4rem;
   max-width: 840px;
   margin-left: auto;
   margin-right: auto;
+
+        @media (min-width: 1245px) {
+      font-size: 2rem;
+    }
 `;
 
 const SectionSubtitleOne = styled.p`
@@ -646,18 +713,26 @@ const SectionSubtitleTwo = styled.p`
 const ImagePlaceholder = styled.div`
   background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
   border-radius: 1rem;
-  height: 30rem;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  width: 100%;
+
+  @media (min-width: 640px) {
+    height: 30rem;
+  }
 `;
 
 const StyledImage = styled.img`
   width: 100%;
   height: 100%;
-  object-fit: cover;
   display: block;
+  object-fit: contain; 
+
+  @media (min-width: 640px) {
+    object-fit: cover;
+  }
 `;
 
 const FeatureList = styled.div`
@@ -687,7 +762,7 @@ const ExclusiveBrandBox = styled.div`
   gap: 1rem;
   padding: 2rem 6rem;
   color: rgb(55, 65, 81);
-  font-size: 2rem;
+  font-size: 1.8rem;
   margin-top: 2rem;
   width: 100%;
   max-width: 400px;
@@ -735,9 +810,9 @@ const ExclusiveBrandBox = styled.div`
     left: 100%;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1245px) {
     padding: 1.5rem 2rem;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   }
 
   @media (max-width: 680px) {
@@ -768,7 +843,7 @@ const FooterContent = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  @media (max-width: 770px) {
+  @media (max-width: 960px) {
     padding: 0 1.5rem;
     flex-direction: column;
     gap: 1rem;
