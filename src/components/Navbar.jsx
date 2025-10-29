@@ -17,7 +17,7 @@ const Navbar = ({
               <Globe
                 style={{ height: "3rem", width: "3rem", color: "#2563eb" }}
               />
-              <LogoText>ExpoComex SRL</LogoText>
+              <LogoText>Expocomex SRL</LogoText>
             </Logo>
 
             {/* Desktop Menu */}
@@ -156,7 +156,7 @@ const NavContent = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 6rem;
+  height: 5.5rem;
 `;
 
 const Logo = styled.div`
@@ -186,7 +186,7 @@ const NavLink = styled.span`
   cursor: pointer;
   padding: 0.5rem 0.75rem;
   border-radius: 0.5rem;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 500;
   transition: all 0.3s ease;
 
