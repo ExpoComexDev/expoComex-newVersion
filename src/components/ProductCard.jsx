@@ -21,29 +21,23 @@ const ProductCard = () => {
 };
 
 const Grid = styled.div`
-  display: flex; /* Cambiamos a Flex */
-  flex-wrap: wrap; /* Permitimos que los ítems salten a la siguiente línea */
+  display: flex;
+  flex-wrap: wrap;
   gap: 2rem;
-  
-  /* Centra los ítems cuando no llenan la última fila (SOLUCIÓN para el ítem 7) */
   justify-content: center; 
   
-  /* Asegura que los ítems ocupen el ancho correcto */
   & > * {
-    /* 1 Columna: Ocupa todo el ancho menos el gap */
     width: 100%;
   }
 
   @media (min-width: 769px) {
     & > * {
-      /* 2 Columnas: Ocupa 50% menos la mitad del gap */
       width: calc(50% - 1rem); 
     }
   }
 
   @media (min-width: 1150px) {
     & > * {
-      /* 3 Columnas: Ocupa 33.33% menos el gap */
       width: calc(33.33% - 1.333rem); 
     }
   }
