@@ -382,7 +382,7 @@ const LandingPage = () => {
             <p>
               Para cualquier consulta, pedido de información o solicitud de
               cotización, le pedimos que por favor complete el siguiente
-              formulario.
+              formulario o envie un mail a contacto@expocomexsrl.com.
             </p>
             <p>¡Le responderemos tan pronto como nos sea posible!</p>
           </SectionSubtitleTwo>
