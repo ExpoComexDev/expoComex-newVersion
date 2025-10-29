@@ -223,9 +223,9 @@ const LandingPage = () => {
 
         <HeroContent>
           <HeroTitle>
-            From the world to your company at a click
+            Importaciones a un click de distancia
             <HeroSubtitle>
-              Ofrecemos seguridad y confianza con mas de 13 años de experiencia en el rubro.
+            Desde 2012, ofrecemos seguridad y confianza, respaldadas por una sólida experiencia.
             </HeroSubtitle>
           </HeroTitle>
           <HeroDescriptionOne>
@@ -252,9 +252,9 @@ const LandingPage = () => {
             Sobre Nosotros
           </SectionTitle>
           <SectionSubtitleOne>
-            Somos una empresa con más de 13 años de sólida trayectoria en el rubro de la importación y
-            el comercio exterior. Contamos con un equipo de profesionales altamente especializados que
-            garantizan la eficiencia y seguridad en cada operación.
+          Desde 2012, hemos forjado una sólida trayectoria en el rubro de la importación y el comercio exterior. 
+          Contamos con un equipo de profesionales altamente especializados, lo que nos permite garantizar la eficiencia, 
+          seguridad y confiabilidad en cada una de sus operaciones.
           </SectionSubtitleOne>
           <SectionSubtitleTwo>
             Nuestra amplia experiencia se extiende
@@ -323,7 +323,7 @@ const LandingPage = () => {
           <BusinessAreasListItems />
 
           <SectionSubtitle>
-            Medios de Importación
+            Medios de Transporte
           </SectionSubtitle>
 
           <OurImportsListItems />
@@ -404,10 +404,10 @@ const LandingPage = () => {
         <FooterContent>
           <FooterLogo>
             <img src={logo} alt="ExpoComex SRL" style={{ width: "50px", height: "50px" }} />
-            <LogoText>ExpoComex SRL</LogoText>
+            <LogoText>Expocomex SRL</LogoText>
           </FooterLogo>
           <FooterText>
-            © 2012 ExpoComex SRL. Todos los derechos reservados.
+            © 2012 Expocomex SRL. Todos los derechos reservados.
           </FooterText>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", zIndex: "1000" }}>
             <div style={{ color: "#9ca3af", display: "flex", alignItems: "center", gap: "0.5rem" }}>
@@ -453,7 +453,7 @@ const Container = styled.div`
 
 const HeroSection = styled.section`
   position: relative;
-  min-height: 80vh;
+  min-height: 85vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -501,10 +501,11 @@ const HeroContent = styled.div`
 
   @media (min-width: 1024px) {
     padding: 0 2rem;
+    max-width: 1200px;
   }
 `;
 
-const HeroTitle = styled.h2`
+const HeroTitle = styled.h1`
   font-size: 2.3rem;
   margin-top: 5rem;
   font-weight: bold;
@@ -517,9 +518,10 @@ const HeroTitle = styled.h2`
     font-size: 3.6rem;
       margin-top: 7rem;
   }
+
   @media (min-width: 1245px) {
-    font-size: 4rem;
-    margin-top: 7rem;
+    font-size: 3.8rem;
+    margin-top: 8rem;
   }
 `;
 
@@ -543,7 +545,7 @@ const HeroDescriptionOne = styled.div`
   color: #bfdbfe;
 
   @media (min-width: 1245px) {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   }
 `;
 
@@ -554,7 +556,7 @@ const HeroDescriptionTwo = styled.div`
   line-height: 1.6;
 
   @media (min-width: 1245px) {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   }
 `;
 

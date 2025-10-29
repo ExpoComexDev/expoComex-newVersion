@@ -5,13 +5,13 @@ import { brands } from "../assets/products";
 const ProductCard = () => {
   return (
     <>
-      <Grid cols="3" alignItems="center">
+      <Grid>
         {brands.map((brand) => (
           <Card key={brand.id}>
             <CardContent>
               {/* <CardTitle style={{ color: "#111827" }}>{product.name}</CardTitle> */}
               {/* <CardDescription>{product.description}</CardDescription> */}
-              <img src={brand.image} alt={brand.name} style={{height: "100px", width: "270px"}} />
+              <img src={brand.image} alt={brand.name} style={{height: brand.height, width: brand.width}} />
             </CardContent>
           </Card>
         ))}
@@ -21,17 +21,31 @@ const ProductCard = () => {
 };
 
 const Grid = styled.div`
-  display: grid;
+  display: flex; /* Cambiamos a Flex */
+  flex-wrap: wrap; /* Permitimos que los ítems salten a la siguiente línea */
   gap: 2rem;
-
-  grid-template-columns: repeat(1, 1fr);
-
-  @media (min-width: 680px) {
-    grid-template-columns: repeat(2, 1fr);
+  
+  /* Centra los ítems cuando no llenan la última fila (SOLUCIÓN para el ítem 7) */
+  justify-content: center; 
+  
+  /* Asegura que los ítems ocupen el ancho correcto */
+  & > * {
+    /* 1 Columna: Ocupa todo el ancho menos el gap */
+    width: 100%;
   }
 
-  @media (min-width: 1024px) {
-    grid-template-columns: repeat(3, 1fr);
+  @media (min-width: 769px) {
+    & > * {
+      /* 2 Columnas: Ocupa 50% menos la mitad del gap */
+      width: calc(50% - 1rem); 
+    }
+  }
+
+  @media (min-width: 1150px) {
+    & > * {
+      /* 3 Columnas: Ocupa 33.33% menos el gap */
+      width: calc(33.33% - 1.333rem); 
+    }
   }
 
   ${(props) => props.alignItems && `align-items: ${props.alignItems};`}
@@ -42,10 +56,15 @@ const Card = styled.div`
   border-radius: 1rem;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   transition: all 0.3s ease;
+  max-width: 380px;
 
   &:hover {
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
     transform: translateY(-8px);
+  }
+
+  @media (max-width: 769px) {
+    max-width: 100%;
   }
 `;
 
