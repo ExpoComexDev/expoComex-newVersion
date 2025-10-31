@@ -1,7 +1,7 @@
-import chemistry from "../img/chemistry.png";
-import minery from "../img/minery.png";
-import oil from "../img/oil.png";
-import train from "../img/train2.png";
+import chemistry from "../img/chemistry.webp";
+import minery from "../img/minery.webp";
+import oil from "../img/oil.webp";
+import train from "../img/train2.webp";
 
 export const businessAreas = [
     {

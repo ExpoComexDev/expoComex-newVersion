@@ -24,43 +24,43 @@ const Navbar = ({
             <NavLinks>
               <NavLink
                 onClick={() => scrollToSection("inicio")}
-                active={activeSection === "inicio"}
+                $active={activeSection === "inicio"}
               >
                 Inicio
               </NavLink>
               <NavLink
                 onClick={() => scrollToSection("nosotros")}
-                active={activeSection === "nosotros"}
+                $active={activeSection === "nosotros"}
               >
                 Nosotros
               </NavLink>
               <NavLink
                 onClick={() => scrollToSection("clientes")}
-                active={activeSection === "clientes"}
+                $active={activeSection === "clientes"}
               >
                 Marcas
               </NavLink>
               <NavLink
                 onClick={() => scrollToSection("importaciones")}
-                active={activeSection === "importaciones"}
+                $active={activeSection === "importaciones"}
               >
                 Importaciones
               </NavLink>
               <NavLink
                 onClick={() => scrollToSection("objetivo")}
-                active={activeSection === "objetivo"}
+                $active={activeSection === "objetivo"}
               >
                 Objetivo
               </NavLink>
               <NavLink
                 onClick={() => scrollToSection("compromiso")}
-                active={activeSection === "compromiso"}
+                $active={activeSection === "compromiso"}
               >
                 Compromiso
               </NavLink>
               <NavLink
                 onClick={() => scrollToSection("contacto")}
-                active={activeSection === "contacto"}
+                $active={activeSection === "contacto"}
               >
                 Contacto
               </NavLink>
@@ -78,43 +78,43 @@ const Navbar = ({
               <MobileMenuContent>
                 <MobileMenuLink
                   onClick={() => scrollToSection("inicio")}
-                  active={activeSection === "inicio"}
+                  $active={activeSection === "inicio"}
                 >
                   Inicio
                 </MobileMenuLink>
                 <MobileMenuLink
                   onClick={() => scrollToSection("nosotros")}
-                  active={activeSection === "nosotros"}
+                  $active={activeSection === "nosotros"}
                 >
                   Sobre Nosotros
                 </MobileMenuLink>
                 <MobileMenuLink
                   onClick={() => scrollToSection("clientes")}
-                  active={activeSection === "clientes"}
+                  $active={activeSection === "clientes"}
                 >
                   Marcas
                 </MobileMenuLink>
                 <MobileMenuLink
                   onClick={() => scrollToSection("importaciones")}
-                  active={activeSection === "importaciones"}
+                  $active={activeSection === "importaciones"}
                 >
                   Importaciones
                 </MobileMenuLink>
                 <MobileMenuLink
                   onClick={() => scrollToSection("objetivo")}
-                  active={activeSection === "objetivo"}
+                  $active={activeSection === "objetivo"}
                 >
                   Objetivo
                 </MobileMenuLink>
                 <MobileMenuLink
                   onClick={() => scrollToSection("compromiso")}
-                  active={activeSection === "compromiso"}
+                  $active={activeSection === "compromiso"}
                 >
                   Compromiso
                 </MobileMenuLink>
                 <MobileMenuLink
                   onClick={() => scrollToSection("contacto")}
-                  active={activeSection === "contacto"}
+                  $active={activeSection === "contacto"}
                 >
                   Contacto
                 </MobileMenuLink>
@@ -201,7 +201,7 @@ const NavLink = styled.span`
   }
 
   ${(props) =>
-    props.active &&
+    props.$active &&
     `
     color: #2563eb;
     font-weight: 600;
@@ -261,7 +261,7 @@ const MobileMenuLink = styled.span`
   }
 
   ${(props) =>
-    props.active &&
+    props.$active &&
     `
     color: #2563eb;
     font-weight: 600;

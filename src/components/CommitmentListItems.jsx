@@ -5,10 +5,10 @@ import { commitments } from "../assets/commitments";
 const CommitmentListItems = () => {
   return (
     <>
-      <Grid cols="4">
+      <Grid $cols="4">
         {commitments.map((commitment) => (
           <CommitmentItem key={commitment.id}>
-            <CommitmentIcon bgColor={commitment.bgColor}>
+            <CommitmentIcon $bgColor={commitment.bgColor}>
               {commitment.icon}
             </CommitmentIcon>
             <CommitmentTitle>{commitment.title}</CommitmentTitle>
@@ -28,11 +28,11 @@ const Grid = styled.div`
 
   @media (min-width: 960px) {
     grid-template-columns: ${(props) =>
-      props.cols === "2"
+      props.$cols === "2"
         ? "repeat(2, 1fr)"
-        : props.cols === "3"
+        : props.$cols === "3"
         ? "repeat(3, 1fr)"
-        : props.cols === "4"
+        : props.$cols === "4"
         ? "repeat(4, 1fr)"
         : "1fr"};
   }
@@ -45,7 +45,7 @@ const CommitmentItem = styled.div`
 `;
 
 const CommitmentIcon = styled.div`
-  background: ${(props) => props.bgColor || "#2563eb"};
+  background: ${(props) => props.$bgColor || "#2563eb"};
   border-radius: 50%;
   height: 7rem;
   width: 7rem;

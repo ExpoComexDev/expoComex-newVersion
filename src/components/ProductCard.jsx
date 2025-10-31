@@ -11,7 +11,12 @@ const ProductCard = () => {
             <CardContent>
               {/* <CardTitle style={{ color: "#111827" }}>{product.name}</CardTitle> */}
               {/* <CardDescription>{product.description}</CardDescription> */}
-              <img src={brand.image} alt={brand.name} style={{height: brand.height, width: brand.width}} />
+              <img 
+                src={brand.image} 
+                alt={`Logo de ${brand.name} - Marca disponible a través de Expocomex SRL`} 
+                loading="lazy"
+                style={{height: brand.height, width: brand.width}} 
+              />
             </CardContent>
           </Card>
         ))}
