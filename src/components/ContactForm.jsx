@@ -11,7 +11,7 @@ const ContactForm = ({
     isHuman = false,
     handleHumanChange = () => {},
 }) => {
-    console.log({errors})
+
   return (
     <>
           <FormContainer onSubmit={handleSubmit}>
@@ -27,7 +27,7 @@ const ContactForm = ({
                 value={formData.nombre}
                 onChange={handleInputChange}
                 placeholder="Ingresá tu nombre"
-                error={!!errors.nombre} 
+                $error={!!errors.nombre} 
               />
               {errors.nombre && <ErrorMessage>{errors.nombre}</ErrorMessage>}
             </FormGroup>
@@ -38,13 +38,13 @@ const ContactForm = ({
                 <span style={{ color: "#df382c", fontWeight: "bold" }}>*</span>
               </Label>
               <Input
-                type="email"
+                type="text"
                 id="email"
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
                 placeholder="tu@email.com"
-                error={!!errors.email}
+                $error={!!errors.email}
               />
               {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
             </FormGroup>
@@ -60,7 +60,7 @@ const ContactForm = ({
                 value={formData.mensaje}
                 onChange={handleInputChange}
                 placeholder="Escribí tu mensaje aquí..."
-                error={!!errors.mensaje}
+                $error={!!errors.mensaje}
               />
               {errors.mensaje && <ErrorMessage>{errors.mensaje}</ErrorMessage>}
             </FormGroup>
@@ -73,7 +73,6 @@ const ContactForm = ({
                     id="human"
                     checked={isHuman}
                     onChange={handleHumanChange}
-                    error={!!errors.human}
                   />
                   <CheckboxLabel htmlFor="human">
                     Este formulario está siendo enviado por un humano.{" "}
@@ -130,7 +129,7 @@ const Label = styled.label`
 const Input = styled.input`
   width: 100%;
   padding: 0.75rem 1rem;
-  border: 1px solid ${(props) => (props.error ? "#df382c" : "#d1d5db")};
+  border: 1px solid ${(props) => (props.$error ? "#df382c" : "#d1d5db")};
   border-radius: 0.5rem;
   transition: all 0.3s ease;
   font-size: 1rem;
@@ -139,8 +138,8 @@ const Input = styled.input`
 
   &:focus {
     outline: none;
-    border-color: ${(props) => (props.error ? "#df382c" : "transparent")};
-    box-shadow: 0 0 0 2px ${(props) => (props.error ? "#df382c" : "#2563eb")};
+    border-color: ${(props) => (props.$error ? "#df382c" : "transparent")};
+    box-shadow: 0 0 0 2px ${(props) => (props.$error ? "#df382c" : "#2563eb")};
   }
 
   &::placeholder {
@@ -151,7 +150,7 @@ const Input = styled.input`
 const Textarea = styled.textarea`
   width: 100%;
   padding: 0.75rem 1rem;
-  border: 1px solid ${(props) => (props.error ? "#df382c" : "#d1d5db")};
+  border: 1px solid ${(props) => (props.$error ? "#df382c" : "#d1d5db")};
   border-radius: 0.5rem;
   transition: all 0.3s ease;
   font-size: 1rem;
@@ -162,8 +161,8 @@ const Textarea = styled.textarea`
 
   &:focus {
     outline: none;
-    border-color: ${(props) => (props.error ? "#df382c" : "transparent")};
-    box-shadow: 0 0 0 2px ${(props) => (props.error ? "#df382c" : "#2563eb")};
+    border-color: ${(props) => (props.$error ? "#df382c" : "transparent")};
+    box-shadow: 0 0 0 2px ${(props) => (props.$error ? "#df382c" : "#2563eb")};
   }
 
   &::placeholder {

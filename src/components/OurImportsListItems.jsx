@@ -5,7 +5,7 @@ import { importMethods } from "../assets/importMethods";
 const OurImportsListItems = () => {
   return (
     <>
-      <Grid cols="3">
+      <Grid $cols="3">
         {importMethods.map((importMethod) => (
           <Card key={importMethod.id}>
             <CardContent>
@@ -28,11 +28,11 @@ const Grid = styled.div`
 
   @media (min-width: 960px) {
     grid-template-columns: ${(props) =>
-      props.cols === "2"
+      props.$cols === "2"
         ? "repeat(2, 1fr)"
-        : props.cols === "3"
+        : props.$cols === "3"
         ? "repeat(3, 1fr)"
-        : props.cols === "4"
+        : props.$cols === "4"
         ? "repeat(4, 1fr)"
         : "1fr"};
   }
