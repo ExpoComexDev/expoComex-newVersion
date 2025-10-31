@@ -1,21 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense, lazy } from "react";
 import styled, { keyframes } from "styled-components";
 import Navbar from "./Navbar";
-import ProductCard from "./ProductCard";
 import AboutUsListItems from "./AboutUsListItems";
 import ObjectivesListItems from "./ObjectivesListItems";
-import CommitmentListItems from "./CommitmentListItems";
-import OurImportsListItems from "./OurImportsListItems";
-import BusinessAreasListItems from "./BusinessAreasItems";
 import SmallModal from "./SmallModal";
 import ContactForm from "./ContactForm";
 import objectivesImg from "../img/objectivesImg.webp";
+import objectivesImg480 from "../img/objectivesImg-480.webp";
+import objectivesImg768 from "../img/objectivesImg-768.webp";
+import objectivesImg1024 from "../img/objectivesImg-1024.webp";
+import objectivesImg1440 from "../img/objectivesImg-1440.webp";
 import aboutUsImg from "../img/aboutUsImg4.webp";
+import aboutUsImg480 from "../img/aboutUsImg4-480.webp";
+import aboutUsImg768 from "../img/aboutUsImg4-768.webp";
+import aboutUsImg1024 from "../img/aboutUsImg4-1024.webp";
+import aboutUsImg1440 from "../img/aboutUsImg4-1440.webp";
 import logo from "../img/expocomex-logo.webp";
-import { Mail, Linkedin } from 'lucide-react';
+// import { Mail, Linkedin } from 'lucide-react';
 import backgroundImg from "../img/test2.webp";
+import backgroundImg768 from "../img/test2-768.webp";
+import backgroundImg1440 from "../img/test2-1440.webp";
+import backgroundImg1920 from "../img/test2-1920.webp";
 import medal from "../img/medal.webp";
 import schlegelLogo from "../img/schlegel-logo.webp";
+
+// Lazy load de secciones no críticas (below the fold)
+const ProductCard = lazy(() => import("./ProductCard"));
+const CommitmentListItems = lazy(() => import("./CommitmentListItems"));
+const OurImportsListItems = lazy(() => import("./OurImportsListItems"));
+const BusinessAreasListItems = lazy(() => import("./BusinessAreasItems"));
 
 const LandingPage = () => {
   const [formData, setFormData] = useState({
@@ -310,6 +323,8 @@ const LandingPage = () => {
               <ImagePlaceholder>
                 <StyledImage 
                   src={aboutUsImg} 
+                  srcSet={`${aboutUsImg480} 480w, ${aboutUsImg768} 768w, ${aboutUsImg1024} 1024w, ${aboutUsImg1440} 1440w`}
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
                   alt="Equipo profesional de Expocomex SRL especializado en importaciones y comercio exterior" 
                   loading="lazy"
                   width={800}
@@ -337,7 +352,9 @@ const LandingPage = () => {
             y duraderas a través de un servicio de excelencia y resultados comprobados.
           </SectionSubtitleTwo>
 
-          <ProductCard />
+          <Suspense fallback={<div style={{ textAlign: 'center', padding: '2rem' }}>Cargando marcas...</div>}>
+            <ProductCard />
+          </Suspense>
           <div style={{ display: "flex", justifyContent: "center", marginTop: "2rem" }}>
             <ExclusiveBrandBox>
               <img src={medal} alt="Medalla de representación exclusiva" loading="lazy" width={100} height={100} style={{ width: "100px" }} />
@@ -368,13 +385,17 @@ const LandingPage = () => {
             Áreas de Negocio
           </SectionSubtitle>
 
-          <BusinessAreasListItems />
+          <Suspense fallback={<div style={{ textAlign: 'center', padding: '2rem' }}>Cargando áreas de negocio...</div>}>
+            <BusinessAreasListItems />
+          </Suspense>
 
           <SectionSubtitle>
             Medios de Transporte
           </SectionSubtitle>
 
-          <OurImportsListItems />
+          <Suspense fallback={<div style={{ textAlign: 'center', padding: '2rem' }}>Cargando medios de transporte...</div>}>
+            <OurImportsListItems />
+          </Suspense>
 
         </SectionContainer>
       </WhiteSection>
@@ -400,6 +421,8 @@ const LandingPage = () => {
               <ImagePlaceholder>
                 <StyledImage 
                   src={objectivesImg} 
+                  srcSet={`${objectivesImg480} 480w, ${objectivesImg768} 768w, ${objectivesImg1024} 1024w, ${objectivesImg1440} 1440w`}
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
                   alt="Nuestro objetivo es facilitar las importaciones con servicios integrales de comercio exterior" 
                   loading="lazy"
                   width={800}
@@ -424,7 +447,9 @@ const LandingPage = () => {
             garantiza eficiencia en cada paso.
           </SectionSubtitleTwo>
 
-          <CommitmentListItems />
+          <Suspense fallback={<div style={{ textAlign: 'center', padding: '2rem' }}>Cargando compromisos...</div>}>
+            <CommitmentListItems />
+          </Suspense>
         </SectionContainer>
       </WhiteSection>
 
@@ -465,10 +490,10 @@ const LandingPage = () => {
           </FooterText>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", zIndex: "1000" }}>
             <div style={{ color: "#9ca3af", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              <Mail size={16} color="#9ca3af" /> <FooterEmail>contacto@expocomexsrl.com</FooterEmail>
+              <MailIcon size={16} color="#9ca3af" /> <FooterEmail>contacto@expocomexsrl.com</FooterEmail>
             </div>
             <div style={{ color: "#9ca3af", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              <Linkedin size={16} color="#9ca3af" /> <FooterSocials href="https://www.linkedin.com/company/expocomex" target="_blank">linkedin.com/company/expocomex</FooterSocials>
+              <LinkedinIcon size={16} color="#9ca3af" /> <FooterSocials href="https://www.linkedin.com/company/expocomex" target="_blank">linkedin.com/company/expocomex</FooterSocials>
             </div>
           </div>
         </FooterContent>
@@ -517,9 +542,19 @@ const HeroSection = styled.section`
 const HeroBackground = styled.div`
   position: absolute;
   inset: 0;
-  background-image: url(${backgroundImg}); 
+  background-image: url(${backgroundImg});
   background-size: cover;
-  background-position: center; 
+  background-position: center;
+
+  @media (max-width: 768px) {
+    background-image: url(${backgroundImg768});
+  }
+  @media (min-width: 769px) and (max-width: 1440px) {
+    background-image: url(${backgroundImg1440});
+  }
+  @media (min-width: 1441px) {
+    background-image: url(${backgroundImg1920});
+  }
 `;
 
 const HeroOverlay = styled.div`
@@ -939,5 +974,20 @@ const ObjectiveGrid = styled.div`
     grid-template-columns: repeat(2, 1fr);
   }
 `;
+
+const MailIcon = (props) => (
+  <svg width={props.size || 16} height={props.size || 16} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" stroke="#9ca3af" strokeWidth="2"/>
+    <path d="M22 6l-10 7L2 6" stroke="#9ca3af" strokeWidth="2"/>
+  </svg>
+);
+
+const LinkedinIcon = (props) => (
+  <svg width={props.size || 16} height={props.size || 16} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" fill="#9ca3af"/>
+    <rect x="2" y="9" width="4" height="12" fill="#9ca3af"/>
+    <circle cx="4" cy="4" r="2" fill="#9ca3af"/>
+  </svg>
+);
 
 export default LandingPage;
