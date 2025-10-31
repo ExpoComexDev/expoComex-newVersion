@@ -6,16 +6,16 @@ import AboutUsListItems from "./AboutUsListItems";
 import ObjectivesListItems from "./ObjectivesListItems";
 import CommitmentListItems from "./CommitmentListItems";
 import OurImportsListItems from "./OurImportsListItems";
+import BusinessAreasListItems from "./BusinessAreasItems";
 import SmallModal from "./SmallModal";
 import ContactForm from "./ContactForm";
-import objectivesImg from "../img/objectivesImg.jpg";
-import aboutUsImg from "../img/aboutUsImg4.jpg";
-import logo from "../img/expocomex-logo.png";
+import objectivesImg from "../img/objectivesImg.webp";
+import aboutUsImg from "../img/aboutUsImg4.webp";
+import logo from "../img/expocomex-logo.webp";
 import { Mail, Linkedin } from 'lucide-react';
-import backgroundImg from "../img/test2.jpg";
-import medal from "../img/medal.png";
-import schlegelLogo from "../img/schlegel-logo.png";
-import BusinessAreasListItems from "./BusinessAreasItems";
+import backgroundImg from "../img/test2.webp";
+import medal from "../img/medal.webp";
+import schlegelLogo from "../img/schlegel-logo.webp";
 
 const LandingPage = () => {
   const [formData, setFormData] = useState({
@@ -161,7 +161,7 @@ const LandingPage = () => {
     } else if (emailSinEspacios.length < 10) {
       newErrors.email = "El correo debe tener al menos 10 caracteres";
     } else if (!emailSinEspacios.includes("@") || !emailSinEspacios.includes(".")) {
-      newErrors.email = "El correo no es válido. Debe incluir '@' y '.'";
+      newErrors.email = "El correo no es válido. Debe incluir '@' y un '.'";
     }
   
     const mensajeSinEspacios = formData.mensaje.trim();
@@ -210,8 +210,50 @@ const LandingPage = () => {
     handleHumanChange: handleHumanChange,
   };
 
+  // Schema.org Structured Data
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Expocomex SRL",
+    "alternateName": "ExpoComex",
+    "url": "https://expocomexsrl.com",
+    "logo": "https://expocomexsrl.com/src/img/expocomex-logo.webp",
+    "description": "Especialistas en importación de equipos, maquinarias, repuestos y materias primas. Más de 13 años de experiencia en transporte, minería, petróleo y química.",
+    "foundingDate": "2012",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "",
+      "contactType": "customer service",
+      "email": "contacto@expocomexsrl.com",
+      "availableLanguage": ["Spanish"]
+    },
+    "sameAs": [
+      "https://www.linkedin.com/company/expocomex"
+    ],
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "AR",
+      "addressLocality": "Argentina"
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": "Argentina"
+    },
+    "knowsAbout": [
+      "Importaciones",
+      "Comercio Exterior",
+      "Transporte Ferroviario",
+      "Minería",
+      "Petróleo",
+      "Química Industrial"
+    ]
+  };
+
   return (
     <Container>
+      {/* Schema.org Structured Data */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }} />
+
       {/* Navigation */}
 
       <Navbar {...navbarProps} />
@@ -266,7 +308,13 @@ const LandingPage = () => {
           <ObjectiveGrid>
             <div>
               <ImagePlaceholder>
-                <StyledImage src={aboutUsImg} alt="About us" />
+                <StyledImage 
+                  src={aboutUsImg} 
+                  alt="Equipo profesional de Expocomex SRL especializado en importaciones y comercio exterior" 
+                  loading="lazy"
+                  width={800}
+                  height={600}
+                />
               </ImagePlaceholder>
             </div>
 
@@ -292,9 +340,9 @@ const LandingPage = () => {
           <ProductCard />
           <div style={{ display: "flex", justifyContent: "center", marginTop: "2rem" }}>
             <ExclusiveBrandBox>
-              <img src={medal} style={{ width: "100px" }} />
+              <img src={medal} alt="Medalla de representación exclusiva" loading="lazy" width={100} height={100} style={{ width: "100px" }} />
               Somos representantes exclusivos de
-              <img src={schlegelLogo} style={{ height: "120px", width: "300px" }} />
+              <img src={schlegelLogo} alt="Logo de Schlegel - Marca representada exclusivamente por Expocomex" loading="lazy" width={300} height={120} style={{ height: "120px", width: "300px" }} />
             </ExclusiveBrandBox>
           </div>
         </SectionContainer>
@@ -350,7 +398,13 @@ const LandingPage = () => {
 
             <div>
               <ImagePlaceholder>
-                <StyledImage src={objectivesImg} alt="Objetivo" />
+                <StyledImage 
+                  src={objectivesImg} 
+                  alt="Nuestro objetivo es facilitar las importaciones con servicios integrales de comercio exterior" 
+                  loading="lazy"
+                  width={800}
+                  height={600}
+                />
               </ImagePlaceholder>
             </div>
           </ObjectiveGrid>
@@ -403,7 +457,7 @@ const LandingPage = () => {
       <Footer>
         <FooterContent>
           <FooterLogo>
-            <img src={logo} alt="ExpoComex SRL" style={{ width: "50px", height: "50px" }} />
+            <img src={logo} alt="Logo de Expocomex SRL - Especialistas en importaciones y comercio exterior desde 2012" width={50} height={50} style={{ width: "50px", height: "50px" }} />
             <LogoText>Expocomex SRL</LogoText>
           </FooterLogo>
           <FooterText>
@@ -576,7 +630,6 @@ const PrimaryButton = styled.button`
   background: linear-gradient(90deg, #2563eb 0%, #0891b2 100%);
   color: white;
   font-size: 1rem;
-  font-family: "Poppins", sans-serif;
   padding: 1rem 3rem;
   border-radius: 9999px;
   font-weight: 600;
@@ -702,7 +755,7 @@ const SectionSubtitleOne = styled.p`
   margin-right: auto;
 `;
 
-const SectionSubtitleTwo = styled.p`
+const SectionSubtitleTwo = styled.div`
   font-size: 1.25rem;
   color: #6b7280;
   text-align: center;

@@ -5,11 +5,18 @@ import { businessAreas } from "../assets/businessAreas";
 const BusinessAreasListItems = () => {
   return (
     <>
-      <Grid cols="2">
+      <Grid $cols="2">
         {businessAreas.map((businessArea) => (
           <CommitmentItem key={businessArea.id}>
-            <CommitmentIcon bgColor={businessArea.bgColor}>
-              <img src={businessArea.image} alt={businessArea.title} style={{ height: "100px", width: "100px" }} />
+            <CommitmentIcon $bgColor={businessArea.bgColor}>
+              <img 
+                src={businessArea.image} 
+                alt={`${businessArea.title} - Área de negocio de Expocomex SRL`} 
+                loading="lazy"
+                width={100}
+                height={100}
+                style={{ height: "100px", width: "100px" }} 
+              />
             </CommitmentIcon>
             <CommitmentTitle>{businessArea.title}</CommitmentTitle>
             <CommitmentDescription>
@@ -37,11 +44,11 @@ const Grid = styled.div`
 
   @media (min-width: 768px) {
     grid-template-columns: ${(props) =>
-    props.cols === "2"
+    props.$cols === "2"
       ? "repeat(2, 1fr)"
-      : props.cols === "3"
+      : props.$cols === "3"
         ? "repeat(3, 1fr)"
-        : props.cols === "4"
+        : props.$cols === "4"
           ? "repeat(4, 1fr)"
           : "1fr"};
   }
@@ -54,7 +61,7 @@ const CommitmentItem = styled.div`
 `;
 
 const CommitmentIcon = styled.div`
-  background: ${(props) => props.bgColor || "#2563eb"};
+  background: ${(props) => props.$bgColor || "#2563eb"};
   border-radius: 50%;
   height: 12rem;
   width: 12rem;

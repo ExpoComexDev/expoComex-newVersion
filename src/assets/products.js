@@ -1,19 +1,19 @@
-import abbLogo from "../img/abb-logo.png";
-import aegLogo from "../img/aeg-logo.png";
-import ferrarShawmutLogo from "../img/ferrar-shawmut-logo.png"
-import morsSmittLogo from "../img/mors-smitt-logo.png"
-import microtexLogo from "../img/microtex.png"
-import schneiderElectricLogo from "../img/schneider-electric-logo.png"
-import crrcLogo from "../img/crrc-logo.jpeg"
-import hartingLogo from "../img/harting-logo.png"
-import schaltbauLogo from "../img/Schaltbau_Logo_RGB_red-scaled.jpg"
-import eatonLogo from "../img/eaton-logo.png"
-import siemensLogo from "../img/siemens-logo.png"
-import shinEtsuLogo from "../img/shin-etsu-logo.png"
-import philipsLogo from "../img/philips-logo.png"
-import smcLogo from "../img/smc-logo.png"
-import norgrenLogo from "../img/norgren-logo.png"
-import caterpillarLogo from "../img/caterpillar-logo.png"
+import abbLogo from "../img/abb-logo.webp";
+import aegLogo from "../img/aeg-logo.webp";
+import ferrarShawmutLogo from "../img/ferrar-shawmut-logo.webp"
+import morsSmittLogo from "../img/mors-smitt-logo.webp"
+import microtexLogo from "../img/microtex.webp"
+import schneiderElectricLogo from "../img/schneider-electric-logo.webp"
+import crrcLogo from "../img/crrc-logo.webp"
+import hartingLogo from "../img/harting-logo.webp"
+import schaltbauLogo from "../img/Schaltbau_Logo_RGB_red-scaled.webp"
+import eatonLogo from "../img/eaton-logo.webp"
+import siemensLogo from "../img/siemens-logo.webp"
+import shinEtsuLogo from "../img/shin-etsu-logo.webp"
+import philipsLogo from "../img/philips-logo.webp"
+import smcLogo from "../img/smc-logo.webp"
+import norgrenLogo from "../img/norgren-logo.webp"
+import caterpillarLogo from "../img/caterpillar-logo.webp"
 
 export const brands = [
   {
