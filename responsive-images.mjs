@@ -11,7 +11,6 @@ const imgDir = path.join(__dirname, 'src', 'img');
 const targets = [
   { base: 'aboutUsImg4.webp', widths: [480, 768, 1024, 1440], quality: 72 },
   { base: 'objectivesImg.webp', widths: [480, 768, 1024, 1440], quality: 72 },
-  // Hero background: más agresivo
   { base: 'test2.webp', widths: [768, 1440, 1920], quality: 60 },
 ];
 
