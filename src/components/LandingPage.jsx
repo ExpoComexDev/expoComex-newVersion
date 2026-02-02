@@ -16,7 +16,6 @@ import aboutUsImg768 from "../img/aboutUsImg4-768.webp";
 import aboutUsImg1024 from "../img/aboutUsImg4-1024.webp";
 import aboutUsImg1440 from "../img/aboutUsImg4-1440.webp";
 import logo from "../img/expocomex-logo.webp";
-// import { Mail, Linkedin } from 'lucide-react';
 import backgroundImg from "../img/test2.webp";
 import backgroundImg768 from "../img/test2-768.webp";
 import backgroundImg1440 from "../img/test2-1440.webp";
@@ -24,7 +23,6 @@ import backgroundImg1920 from "../img/test2-1920.webp";
 import medal from "../img/medal.webp";
 import schlegelLogo from "../img/schlegel-logo.webp";
 
-// Lazy load de secciones no críticas (below the fold)
 const ProductCard = lazy(() => import("./ProductCard"));
 const CommitmentListItems = lazy(() => import("./CommitmentListItems"));
 const OurImportsListItems = lazy(() => import("./OurImportsListItems"));
@@ -679,22 +677,6 @@ const PrimaryButton = styled.button`
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
   }
 `;
-
-/* const SecondaryButton = styled.button`
-  border: 2px solid white;
-  color: white;
-  background: transparent;
-  padding: 1rem 2rem;
-  border-radius: 9999px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  
-  &:hover {
-    background: white;
-    color: #1e3a8a;
-  }
-`; */
 
 const Section = styled.section`
   padding: 5rem 1.5rem 5rem 1.5rem;
